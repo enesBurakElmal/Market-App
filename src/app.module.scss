@@ -1,0 +1,33 @@
+.appContainer {
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+  .appWrapper {
+    display: flex;
+    max-width: 80%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: auto;
+  }
+
+  .shortColumn {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 25%;
+    margin-bottom: auto;
+  }
+  .middleColumn {
+    width: 45%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

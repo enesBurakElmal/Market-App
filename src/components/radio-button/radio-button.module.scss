@@ -1,0 +1,99 @@
+.radioContent {
+  display: flex;
+  .custom__radio {
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    & + label {
+      cursor: pointer;
+      // display: inline-block;
+      position: relative;
+      white-space: nowrap;
+      line-height: 1rem;
+      margin: 0 0 1rem 1.5rem;
+      transition: all 0.5s ease-in-out;
+      top: 3px;
+      span {
+        margin-left: 2.5rem;
+        position: relative;
+        top: 5px;
+      }
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        color: #f5f5f5;
+        text-align: center;
+        border-radius: 0;
+        width: 22px;
+        height: 22px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease-in-out;
+      }
+
+      &::before {
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1rem;
+        border-radius: 0;
+        background-color: #ffffff;
+        border: 2px solid #dfdee2;
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        transition: all 0.3s ease;
+        outline: none;
+        &::before {
+          color: #ffffff;
+          animation-duration: 0.5s;
+          animation-name: changeSizeAnim;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+        }
+      }
+    }
+    &:focus,
+    &:hover,
+    &:checked {
+      & + label {
+        color: #220000 !important;
+      }
+      & + label::before {
+        animation-duration: 0.3s;
+        animation-name: selectCheckboxAnim;
+        animation-iteration-count: 1;
+        animation-direction: alternate;
+      }
+    }
+    &:checked {
+      & + label::before {
+        content: '✔';
+        background-color: transparent;
+        color: #1ea4ce;
+        border: 2px solid #1ea4ce;
+      }
+    }
+
+    & + label {
+      &::before {
+        border-radius: 50%;
+      }
+    }
+    &[type='checkbox'] {
+      & + label {
+        &::before {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+  .label {
+    // margin-left: auto;
+    // border: 1px solid #000;
+  }
+}

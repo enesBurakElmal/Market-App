@@ -1,0 +1,41 @@
+.payloadContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
+  .payloadContent {
+    display: flex;
+    flex-direction: column;
+    border: 8px solid #1ea4ce;
+    height: 320px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px;
+    .buyContent {
+      text-align: end;
+      // overflow: hidden;
+      flex-wrap: wrap;
+      width: 96%;
+      .buyButton {
+        max-width: 35%;
+        height: 50px;
+        width: 100%;
+        background-color: transparent;
+        color: #1ea4ce;
+        border: 1px solid #1ea4ce;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: auto;
+        cursor: pointer;
+        text-overflow: ellipsis;
+        display: inline-block;
+        transition: ease-in 0.2s;
+        &:hover {
+          background-color: #1ea4ce;
+          color: #ffffff;
+          transition: ease-in 0.2s;
+        }
+      }
+    }
+  }
+}

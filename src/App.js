@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Navbar from './components/navbar/navbar-component'
+
+import SortingComponent from './components/sorting-component/sorting-component'
+import BrandsComponent from './components/brands-component/brands-component'
+import TagsComponent from './components/tags-component/tags-component'
+import EmployeesIndex from './components/display-products/display-products.component'
+import PayloadComponent from './components/checkout/checkout.component'
+
+import styles from './app.module.scss'
+
+// json-server --watch items.json --port 3001
+// json-server --watch companies.json --port 3002
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <Navbar />
+        <div className={styles.appContainer}>
+          <div style={{ height: window.innerHeight / 10 }} />
+          <div className={styles.appWrapper}>
+            <div className={styles.shortColumn}>
+              <SortingComponent onChange={this.onChange} />
+              <BrandsComponent />
+              <TagsComponent />
+            </div>
+            <div className={styles.middleColumn}>
+              <EmployeesIndex />
+            </div>
+            <div className={styles.shortColumn}>
+              <PayloadComponent cartItem={this.props.cartItem} />
+            </div>
+          </div>
+        </div>
+      </Fragment>
+    )
+  }
 }
 
-export default App;
+export default App
