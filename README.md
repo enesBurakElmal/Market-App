@@ -5,17 +5,13 @@ After this clone, run from Terminal
 1- npm install
 
 
-
 2- npm start
-
 
 
 3- json-server --watch items.json --port 3001
 
 
-
 4- json-server --watch companies.json --port 3002
-
 
 
 
