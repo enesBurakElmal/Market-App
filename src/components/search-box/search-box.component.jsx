@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
 
-const SearchBox = ({ searchChange }) => {
+import styles from './search-box.module.scss'
+
+const SearchBox = ({ searchChange, placeholder }) => {
   return (
     <Fragment>
       <input
-        className="searchInput"
+        className={styles.search}
         type="text"
-        name="name"
-        placeholder="Search"
+        name="search"
+        placeholder={placeholder}
         onChange={searchChange}
       />
     </Fragment>

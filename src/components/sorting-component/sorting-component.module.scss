@@ -1,8 +1,6 @@
 .leftContent {
   flex-wrap: wrap;
   flex-direction: column;
-
-  background-color: white;
   ::-webkit-scrollbar {
     width: 4px;
     height: 28px !important;
@@ -24,4 +22,5 @@
   font-weight: 600;
   font-size: 13px;
   color: #697488;
+  letter-spacing: 0.5px;
 }

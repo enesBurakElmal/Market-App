@@ -6,17 +6,15 @@
     opacity: 0;
     & + label {
       cursor: pointer;
-      // display: inline-block;
       position: relative;
       white-space: nowrap;
       line-height: 1rem;
       margin: 0 0 1rem 1.5rem;
       transition: all 0.5s ease-in-out;
-      top: 3px;
       span {
         margin-left: 2.5rem;
         position: relative;
-        top: 5px;
+        top: 2px;
       }
 
       &::before,
@@ -27,7 +25,7 @@
         text-align: center;
         border-radius: 0;
         width: 22px;
-        height: 22px;
+        padding: 1px;
         align-items: center;
         justify-content: center;
         transition: all 0.5s ease-in-out;
@@ -38,6 +36,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         line-height: 1rem;
+        padding: 1px;
         border-radius: 0;
         background-color: #ffffff;
         border: 2px solid #dfdee2;
@@ -75,12 +74,14 @@
         content: '✔';
         background-color: transparent;
         color: #1ea4ce;
+        padding: 1px;
         border: 2px solid #1ea4ce;
       }
     }
 
     & + label {
       &::before {
+        height: 15px;
         border-radius: 50%;
       }
     }

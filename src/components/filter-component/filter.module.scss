@@ -1,30 +1,42 @@
 .tagsContainer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  max-width: 296px;
   width: 100%;
   max-height: 274px;
-  height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-bottom: 40px;
-  padding: 50px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: white;
-  padding: 0px;
   font-size: 18px;
-  .tags {
-    display: flex;
-    flex-direction: column;
-    text-align: start;
-    line-height: 22px;
-    padding-top: 0.5rem;
-    .nameCount {
-      color: #a8a8a8;
-      font-size: 14px;
+  .header {
+    font-weight: 600;
+    color: #697488;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .content {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    .tags {
+      display: flex;
+      flex-direction: column;
+      text-align: start;
+      padding-top: 0.5rem;
+      .searchTag {
+        color: #525252;
+        font-weight: normal;
+        line-height: 22px;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        .nameCount {
+          color: #a8a8a8;
+          font-weight: normal;
+          line-height: 22px;
+          letter-spacing: 0.5px;
+          font-size: 14px;
+        }
+      }
     }
   }
 }

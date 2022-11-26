@@ -36,41 +36,54 @@ const FilterComponent = ({
     return uniqueBrands.length
   }
 
+  const sliceTag = (array, start, end) => {
+    const slicedArray = array.slice(start, end)
+    return slicedArray
+  }
+
   return (
     <Fragment>
       <div className={styles.tagsContainer}>
-        <h4>{header}</h4>
-        <SearchBox
-          type="text"
-          name="name"
-          placeholder="Search Tag"
-          searchChange={searchfield}
-        />
-        <div className={styles.tags}>
-          <label>
-            <input type="checkbox" /> All{' '}
-            <span className={styles.nameCount}>
-              (
-              {header === 'Brands'
-                ? brandsTotalCount(productsData)
-                : productsTotalTagCount(productsData).length}
-              )
-            </span>
-          </label>
-          {inputData.map((tag, index) => (
-            <label key={index}>
-              <input type="checkbox" onClick={inputEvent} name={tag.slug} />
-              {tag.slug ? tag.slug : tag}
+        <h4 className={styles.header}>{header}</h4>
+        <div className={styles.content}>
+          <SearchBox
+            type="text"
+            name="name"
+            placeholder="Search brand"
+            searchChange={searchfield}
+          />
+          <div className={styles.tags}>
+            <label>
+              <input type="checkbox" /> All{' '}
               <span className={styles.nameCount}>
-                {' '}
                 (
-                {tag.slug
-                  ? sameNameCountBrands(productsData, tag.slug)
-                  : sameNameCountTags(tag)}
+                {header === 'Brands'
+                  ? brandsTotalCount(productsData)
+                  : productsTotalTagCount(productsData).length}
                 )
               </span>
             </label>
-          ))}
+            {inputData.map((tag, index) => {
+              return (
+                <label key={index} className={styles.searchTag}>
+                  <input type="checkbox" onClick={inputEvent} name={tag.slug} />
+                  {tag.slug
+                    ? tag.slug.length > 20
+                      ? sliceTag(tag.slug, 0, 25) + '...'
+                      : tag.slug
+                    : tag}
+                  <span className={styles.nameCount}>
+                    {' '}
+                    (
+                    {tag.slug
+                      ? sameNameCountBrands(productsData, tag.slug)
+                      : sameNameCountTags(tag)}
+                    )
+                  </span>
+                </label>
+              )
+            })}
+          </div>
         </div>
       </div>
     </Fragment>
