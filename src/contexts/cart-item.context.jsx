@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
+<<<<<<< HEAD
 import itemsJson from '../items'
 import companiesJson from '../companies'
 const productsUrl = 'http://localhost:3001/items'
@@ -12,6 +13,10 @@ let config = {
     'Access-Control-Allow-Origin': '*',
   },
 }
+=======
+const productsUrl = 'http://localhost:3001/items'
+const companiesUrl = 'http://localhost:3002/companies'
+>>>>>>> fb239edb1562615a3805582a7bc1d8d97ab11330
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -88,6 +93,8 @@ export const CartContext = createContext({
   selectMugOrShirt: () => {},
 })
 
+export let allProducts = []
+
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [products, setProducts] = useState([])
@@ -137,10 +144,34 @@ export const CartProvider = ({ children }) => {
   // }, [])
 
   useEffect(() => {
+<<<<<<< HEAD
     setProducts(itemsJson)
     setCompanies(companiesJson)
     setPageCount(Math.ceil(products.length / 16))
   }, [products, companies])
+=======
+    axios
+      .get(productsUrl)
+      .then((response) => {
+        setProducts(response.data)
+        allProducts = response.data
+      })
+      .catch((error) => {
+        console.log(error, 'err from products data fetch with app-context')
+      })
+  }, [])
+
+  useEffect(() => {
+    axios
+      .get(companiesUrl)
+      .then((response) => {
+        setCompanies(response.data)
+      })
+      .catch((error) => {
+        console.log(error, 'err from companies data fetch with app-context')
+      })
+  }, [])
+>>>>>>> fb239edb1562615a3805582a7bc1d8d97ab11330
 
   useEffect(() => {
     const productTags = products.map((product) => product.tags)
@@ -161,8 +192,10 @@ export const CartProvider = ({ children }) => {
     const productsToDisplay = products.slice(startIndex, endIndex)
     return productsToDisplay
   }
+
   useEffect(() => {
     setPaginationItems(currentPageProducts(products, currentPage))
+    setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
 
   useEffect(() => {
@@ -201,10 +234,8 @@ export const CartProvider = ({ children }) => {
     )
     if (label === 'mug') {
       setPaginationItems(currentPageProducts(selectMugs, currentPage))
-      setPageCount(Math.ceil(selectMugs.length / 16))
     } else {
       setPaginationItems(currentPageProducts(selectShirts, currentPage))
-      setPageCount(Math.ceil(selectShirts.length / 16))
     }
   }
 
