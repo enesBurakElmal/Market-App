@@ -101,11 +101,7 @@ export const CartProvider = ({ children }) => {
   const [cartTotal, setCartTotal] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-  useEffect(() => {
-    setProducts(itemsJson)
-    setCompanies(companiesJson)
-    setPageCount(Math.ceil(itemsJson.length / 16))
-  }, [paginationItems])
+
   useEffect(() => {
     const newCartTotal = cartItems
       .reduce(
@@ -139,6 +135,12 @@ export const CartProvider = ({ children }) => {
   //       console.log(error, 'err from companies data fetch with app-context')
   //     })
   // }, [])
+
+  useEffect(() => {
+    setProducts(itemsJson)
+    setCompanies(companiesJson)
+    setPageCount(Math.ceil(products.length / 16))
+  }, [products, companies])
 
   useEffect(() => {
     const productTags = products.map((product) => product.tags)

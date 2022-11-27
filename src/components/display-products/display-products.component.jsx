@@ -28,7 +28,6 @@ const EmployeesIndex = () => {
             buttonLabel === label ? styles.active : ''
           } ${{ transition: 'ease-in-out 0.3s' }}`}
           onClick={active}
-          style={{ transition: ' ease-in-out 0.3s' }}
         >
           {label}
         </button>
