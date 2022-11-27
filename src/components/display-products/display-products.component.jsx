@@ -7,8 +7,13 @@ import styles from './display-products.module.scss'
 const EmployeesIndex = () => {
   const [buttonLabel, setButtonLabel] = useState('mug')
 
-  const { addItemToCart, paginationItems, pageCount, setCurrentPage } =
-    useContext(CartContext)
+  const {
+    addItemToCart,
+    paginationItems,
+    pageCount,
+    setCurrentPage,
+    selectMugOrShirt,
+  } = useContext(CartContext)
 
   const handlePageClick = (onPage) => {
     setCurrentPage(onPage.selected + 1)
@@ -17,17 +22,15 @@ const EmployeesIndex = () => {
   const FilterButton = ({ onFilter, label, active }) => {
     return (
       <Fragment>
-        <div style={{}}>
-          <button
-            className={`${styles.button} ${
-              buttonLabel === label ? styles.active : ''
-            } ${{ transition: 'ease-in-out 0.3s' }}`}
-            onClick={active}
-            style={{ transition: ' ease-in-out 0.3s' }}
-          >
-            {label}
-          </button>
-        </div>
+        <button
+          className={`${styles.button} ${
+            buttonLabel === label ? styles.active : ''
+          } ${{ transition: 'ease-in-out 0.3s' }}`}
+          onClick={active}
+          style={{ transition: ' ease-in-out 0.3s' }}
+        >
+          {label}
+        </button>
       </Fragment>
     )
   }
@@ -37,10 +40,15 @@ const EmployeesIndex = () => {
         <div className={styles.header}>
           <p>Products</p>
           <div className={styles.button__content}>
-            <FilterButton label={'mug'} active={() => setButtonLabel('mug')} />
+            <FilterButton
+              label={'mug'}
+              active={() => setButtonLabel('mug') || selectMugOrShirt('mug')}
+            />
             <FilterButton
               label={'shirt'}
-              active={() => setButtonLabel('shirt')}
+              active={() =>
+                setButtonLabel('shirt') || selectMugOrShirt('shirt')
+              }
             />
           </div>
         </div>
@@ -86,5 +94,4 @@ const EmployeesIndex = () => {
     </Fragment>
   )
 }
-
 export default EmployeesIndex

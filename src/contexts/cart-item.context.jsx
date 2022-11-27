@@ -76,6 +76,7 @@ export const CartContext = createContext({
   companies: [],
   newToOld: () => {},
   oldToNew: () => {},
+  selectMugOrShirt: () => {},
 })
 
 export const CartProvider = ({ children }) => {
@@ -177,6 +178,20 @@ export const CartProvider = ({ children }) => {
     setProducts(filterScript(products, onFilter))
   }
 
+  const selectMugOrShirt = (label) => {
+    const selectMugs = products.filter((product) => product.itemType === 'mug')
+    const selectShirts = products.filter(
+      (product) => product.itemType === 'shirt'
+    )
+    if (label === 'mug') {
+      setPaginationItems(currentPageProducts(selectMugs, currentPage))
+      setPageCount(Math.ceil(selectMugs.length / 16))
+    } else {
+      setPaginationItems(currentPageProducts(selectShirts, currentPage))
+      setPageCount(Math.ceil(selectShirts.length / 16))
+    }
+  }
+
   const lowToHigh = (products) => {
     const sortedProducts = products.sort((a, b) => a.price - b.price)
     setPaginationItems(currentPageProducts(sortedProducts, currentPage))
@@ -238,6 +253,7 @@ export const CartProvider = ({ children }) => {
     companies,
     newToOld,
     oldToNew,
+    selectMugOrShirt,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
