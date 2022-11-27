@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
-const productsUrl = 'https://market-workspace.netlify.app/items.json'
-const companiesUrl = 'https://market-workspace.netlify.app/companies.json'
+const productsUrl = 'http://localhost:3001/items'
+const companiesUrl = 'http://localhost:3002/companies'
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(

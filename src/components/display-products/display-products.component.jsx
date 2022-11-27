@@ -2,7 +2,7 @@ import React, { useContext, useState, Fragment } from 'react'
 import ReactPaginate from 'react-paginate'
 
 import { CartContext } from '../../contexts/cart-item.context'
-import ProductImage from '../../assets/favicon.png'
+import ProductImage from '../../assets/github-logo.png'
 import styles from './display-products.module.scss'
 
 const EmployeesIndex = () => {
@@ -59,11 +59,13 @@ const EmployeesIndex = () => {
             return (
               <div className={styles.productCard} key={index}>
                 <div className={styles.imgDiv}>
-                  <img
-                    src={ProductImage}
-                    alt="product"
-                    style={{ width: '100%', height: '100%' }}
-                  />
+                  <a
+                    href={'https://github.com/enesBurakElmal/'}
+                    target={'_blank'}
+                    rel="noreferrer"
+                  >
+                    <img src={ProductImage} alt="product" />
+                  </a>
                 </div>
                 <p className={styles.itemPrice}>
                   <span className={styles.span}>₺ </span>

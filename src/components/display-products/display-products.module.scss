@@ -53,9 +53,12 @@
         margin: 10px auto;
         background-color: transparent;
         img {
-          max-width: 95px;
           width: 100%;
           background-color: transparent;
+          &:hover {
+            transition: ease-in 0.4s;
+            transform: scale(1.1);
+          }
         }
       }
       .itemName {
