@@ -7,9 +7,7 @@ import BrandsComponent from './components/brands-component/brands-component'
 import TagsComponent from './components/tags-component/tags-component'
 import EmployeesIndex from './components/display-products/display-products.component'
 import PayloadComponent from './components/checkout/checkout.component'
-
 import styles from './app.module.scss'
-
 // json-server --watch items.json --port 3001
 // json-server --watch companies.json --port 3002
 

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
-const productsUrl = 'http://localhost:3001/items'
-const companiesUrl = 'http://localhost:3002/companies'
+const productsUrl = 'https://market-workspace.netlify.app/items.json'
+const companiesUrl = 'https://market-workspace.netlify.app/companies.json'
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -106,7 +106,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     axios
       .get(productsUrl)
-      .then((response) => {
+      .then((response, res) => {
         setProducts(response.data)
         setPageCount(Math.ceil(response.data.length / 16))
       })
@@ -114,7 +114,6 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from products data fetch with app-context')
       })
   }, [])
-
   useEffect(() => {
     axios
       .get(companiesUrl)

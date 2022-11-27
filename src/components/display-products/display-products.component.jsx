@@ -59,11 +59,11 @@ const EmployeesIndex = () => {
             return (
               <div className={styles.productCard} key={index}>
                 <div className={styles.imgDiv}>
-                  <img
+                  {/* <img
                     src={ProductImage}
                     alt="product"
                     style={{ width: '100%', height: '100%' }}
-                  />
+                  /> */}
                 </div>
                 <p className={styles.itemPrice}>
                   <span className={styles.span}>₺ </span>
