@@ -5,14 +5,8 @@ import { CartContext, allProducts } from '../../contexts/cart-item.context'
 import FilterComponent from '../filter-component/filter.component'
 
 const TagsComponent = () => {
-  const {
-    tagFilter,
-    setTagField,
-    productsTags,
-    products,
-    setProducts,
-    setProductsTags,
-  } = useContext(CartContext)
+  const { tagFilter, setTagField, productsTags, products, setProducts } =
+    useContext(CartContext)
   const [handleTag, setHandleTag] = useState([])
 
   const handleTagFilter = (e) => {
