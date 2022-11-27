@@ -65,22 +65,24 @@ const EmployeesIndex = () => {
           })}
         </div>
       </div>
-      <ReactPaginate
-        pageCount={pageCount}
-        marginPagesDisplayed={4}
-        pageRangeDisplayed={4}
-        onPageChange={handlePageClick}
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        containerClassName={styles.navigationButtons}
-        subContainerClassName={styles.pagesPagination}
-        activeClassName={styles.navigationActive}
-        previousLinkClassName={styles.previousButton}
-        nextLinkClassName={styles.nextButton}
-        disabledClassName={styles.navigationDisabled}
-        activeLinkClassName={styles.navigationActive}
-      />
+      <div style={{}} className={styles.paginate__wrapper}>
+        <ReactPaginate
+          pageCount={pageCount}
+          marginPagesDisplayed={4}
+          pageRangeDisplayed={4}
+          onPageChange={handlePageClick}
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          containerClassName={styles.navigationButtons}
+          subContainerClassName={styles.pagesPagination}
+          activeClassName={styles.navigationActive}
+          previousLinkClassName={styles.previousButton}
+          nextLinkClassName={styles.nextButton}
+          disabledClassName={styles.navigationDisabled}
+          activeLinkClassName={styles.navigationActive}
+        />
+      </div>
     </Fragment>
   )
 }

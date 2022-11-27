@@ -54,34 +54,56 @@ const FilterComponent = ({
           />
           <div style={{ height: window.innerHeight / 30 }}></div>
           <div className={styles.tags}>
-            <label className={styles.searchTag}>
-              <input type="checkbox" className={styles.inputTag} /> All{' '}
-              <span className={styles.nameCount}>
-                (
-                {header === 'Brands'
-                  ? brandsTotalCount(productsData)
-                  : productsTotalTagCount(productsData).length}
-                )
-              </span>
-            </label>
+            <div className={styles.tagsWrapper}>
+              <input
+                type="checkbox"
+                className={styles.inputTag}
+                id={header === 'Brands' ? 'allBrands' : 'allTags'}
+              />
+              <label
+                className={styles.searchTag}
+                for={header === 'Brands' ? 'allBrands' : 'allTags'}
+              >
+                All{' '}
+                <span className={styles.nameCount}>
+                  (
+                  {header === 'Brands'
+                    ? brandsTotalCount(productsData)
+                    : productsTotalTagCount(productsData).length}
+                  )
+                </span>
+              </label>
+            </div>
             {inputData.map((tag, index) => {
               return (
-                <label key={index} className={styles.searchTag}>
-                  <input type="checkbox" onClick={inputEvent} name={tag.slug} />
-                  {tag.slug
-                    ? tag.slug.length > 20
-                      ? sliceTag(tag.slug, 0, 20) + '...'
-                      : tag.slug
-                    : tag}
-                  <span className={styles.nameCount}>
-                    {' '}
-                    (
-                    {tag.slug
-                      ? sameNameCountBrands(productsData, tag.slug)
-                      : sameNameCountTags(tag)}
-                    )
-                  </span>
-                </label>
+                <Fragment>
+                  <div className={styles.tagsWrapper}>
+                    <input
+                      type="checkbox"
+                      onClick={inputEvent}
+                      name={tag.slug ? tag.slug : tag}
+                      id={tag.slug ? tag.slug : tag}
+                    />
+                    <label
+                      key={index}
+                      className={styles.searchTag}
+                      for={tag.slug ? tag.slug : tag}
+                    >
+                      {tag.slug
+                        ? tag.slug.length > 20
+                          ? sliceTag(tag.slug, 0, 17) + '...'
+                          : tag.slug
+                        : tag}
+                    </label>{' '}
+                    <span className={styles.nameCount}>
+                      (
+                      {tag.slug
+                        ? sameNameCountBrands(productsData, tag.slug)
+                        : sameNameCountTags(tag)}
+                      )
+                    </span>
+                  </div>
+                </Fragment>
               )
             })}
           </div>

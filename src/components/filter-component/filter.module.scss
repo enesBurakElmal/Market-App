@@ -21,13 +21,20 @@
       max-height: 274px;
       overflow-x: hidden;
       overflow-y: auto;
-      .searchTag {
-        color: #525252;
-        font-weight: normal;
-        line-height: 22px;
-        letter-spacing: 0.5px;
-        max-height: 274px;
-        font-size: 14px;
+      .tagsWrapper {
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        .searchTag {
+          color: #525252;
+          font-weight: normal;
+          line-height: 30px;
+          letter-spacing: 0.5px;
+          max-height: 274px;
+          font-size: 14px;
+          white-space: nowrap;
+        }
         .nameCount {
           color: #a8a8a8;
           font-weight: normal;
@@ -46,7 +53,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #999;
+  background-color: #e0e0e0;
   height: 145px;
 }
 -webkit-scrollbar-track {

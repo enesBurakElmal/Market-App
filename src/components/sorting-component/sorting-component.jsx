@@ -49,23 +49,6 @@ const SortingComponent = () => {
           isChecked={selectedInput === 'oldToNew'}
           handleChange={handleChange}
         />
-        {/* <span>✓</span> */}
-        {/* <RadioButton
-          label="Price high to low"
-          value={favorite === 'highToLow'}
-          onChange={handleHighToLow}
-        />
-        <RadioButton
-          label="New to old"
-          value={favorite === 'newToOld'}
-          onChange={handleNewToOld}
-        />
-        <RadioButton
-          label="Old to new"
-          value={favorite === 'oldToNew'}
-          onChange={handleOldToNew}
-        /> */}
-        {/* <RadioButton label="Old to new" value={value} onChange={handleChange} /> */}
       </div>
     </div>
   )

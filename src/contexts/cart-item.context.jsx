@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
-
 const productsUrl = 'http://localhost:3001/items'
 const companiesUrl = 'http://localhost:3002/companies'
 
@@ -102,6 +101,7 @@ export const CartProvider = ({ children }) => {
       .toFixed(2)
     setCartTotal(newCartTotal)
   }, [cartItems])
+
   useEffect(() => {
     axios
       .get(productsUrl)
@@ -113,6 +113,7 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from products data fetch with app-context')
       })
   }, [])
+
   useEffect(() => {
     axios
       .get(companiesUrl)

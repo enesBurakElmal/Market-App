@@ -90,7 +90,11 @@
     }
   }
 }
-
+.paginate__wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
 .pagesPagination {
   display: flex;
   justify-content: center;
