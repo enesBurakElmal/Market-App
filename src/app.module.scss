@@ -4,8 +4,7 @@ $checkbox-selected: #1ea4ce;
 
 .appContainer {
   width: 100%;
-  // margin: auto;
-  border: 1px solid red;
+  margin: auto;
   @media (max-width: 768px) {
     flex-wrap: wrap;
   }
