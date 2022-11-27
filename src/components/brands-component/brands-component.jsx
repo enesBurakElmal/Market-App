@@ -7,14 +7,8 @@ import FilterComponent from '../filter-component/filter.component'
 const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
-  const {
-    filteredTags,
-    setSearchfield,
-    products,
-    setProducts,
-    setPageCount,
-    companies,
-  } = useContext(CartContext)
+  const { filteredTags, setSearchfield, products, setProducts, companies } =
+    useContext(CartContext)
   const handleSearch = (e) => {
     filteredTags(e.target.value)
     setSearchfield(e.target.value)
@@ -38,6 +32,11 @@ const BrandsComponent = () => {
     }
   }, [selectedSlugs, products, setProducts])
 
+  const handleSelectAll = () => {
+    setProducts(allProducts)
+    setSelectedSlugs([])
+  }
+
   return (
     <Fragment>
       <FilterComponent
@@ -46,6 +45,7 @@ const BrandsComponent = () => {
         productsData={products}
         searchfield={handleSearch}
         inputEvent={selectedCompanyFilter}
+        selectAll={handleSelectAll}
       />
     </Fragment>
   )

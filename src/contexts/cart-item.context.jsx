@@ -171,12 +171,9 @@ export const CartProvider = ({ children }) => {
       setPageCount(Math.ceil(filterOnTags(products, tagField).length / 16))
     }
   }, [tagField, products])
-
   const tagFilter = (tag) => {
     setTagField(filterOnTags(products, tag))
-    setProducts(filterOnTags(products, tag))
   }
-
   const filteredTags = (onFilter) => {
     setSearchfield(filterScript(products, onFilter))
     setProducts(filterScript(products, onFilter))
