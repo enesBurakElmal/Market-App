@@ -79,6 +79,8 @@ export const CartContext = createContext({
   selectMugOrShirt: () => {},
 })
 
+export let allProducts = []
+
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [products, setProducts] = useState([])
@@ -106,14 +108,15 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     axios
       .get(productsUrl)
-      .then((response, res) => {
+      .then((response) => {
         setProducts(response.data)
-        setPageCount(Math.ceil(response.data.length / 16))
+        allProducts = response.data
       })
       .catch((error) => {
         console.log(error, 'err from products data fetch with app-context')
       })
   }, [])
+
   useEffect(() => {
     axios
       .get(companiesUrl)
@@ -144,8 +147,10 @@ export const CartProvider = ({ children }) => {
     const productsToDisplay = products.slice(startIndex, endIndex)
     return productsToDisplay
   }
+
   useEffect(() => {
     setPaginationItems(currentPageProducts(products, currentPage))
+    setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
 
   useEffect(() => {
@@ -184,10 +189,8 @@ export const CartProvider = ({ children }) => {
     )
     if (label === 'mug') {
       setPaginationItems(currentPageProducts(selectMugs, currentPage))
-      setPageCount(Math.ceil(selectMugs.length / 16))
     } else {
       setPaginationItems(currentPageProducts(selectShirts, currentPage))
-      setPageCount(Math.ceil(selectShirts.length / 16))
     }
   }
 

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react'
 
-import { CartContext } from '../../contexts/cart-item.context'
+import { CartContext, allProducts } from '../../contexts/cart-item.context'
 
 import FilterComponent from '../filter-component/filter.component'
 
-const BrandsComponent = (e) => {
+const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
   const {
@@ -15,26 +15,29 @@ const BrandsComponent = (e) => {
     setPageCount,
     companies,
   } = useContext(CartContext)
-
   const handleSearch = (e) => {
     filteredTags(e.target.value)
     setSearchfield(e.target.value)
   }
   const selectedCompanyFilter = (e) => {
     setSelectedSlugs([...selectedSlugs, e.target.name])
+    if (selectedSlugs.includes(e.target.name)) {
+      setSelectedSlugs(selectedSlugs.filter((slug) => slug !== e.target.name))
+    }
   }
 
   useEffect(() => {
-    if (selectedSlugs.length > 0) {
-      const filteredProducts = products.filter((product) =>
-        product.manufacturer
-          .toLowerCase()
-          .includes(selectedSlugs.map((slug) => slug.toLowerCase()))
-      )
+    const filteredProducts = products.filter((product) =>
+      product.manufacturer
+        .toLowerCase()
+        .includes(selectedSlugs.map((slug) => slug.toLowerCase()))
+    )
+    if (selectedSlugs.length === 0) {
+      setProducts(allProducts)
+      setPageCount(Math.ceil(products.length / 16))
+    } else {
       setProducts(filteredProducts)
       setPageCount(Math.ceil(filteredProducts.length / 16))
-    } else {
-      setProducts(products)
     }
   }, [selectedSlugs, products, setProducts, setPageCount])
 
