@@ -52,7 +52,7 @@ const FilterComponent = ({
             placeholder={`    Search brand`}
             searchChange={searchfield}
           />
-          <div style={{ height: window.innerHeight / 30 }}></div>
+          <div style={{ height: window.innerHeight / 30 }} />
           <div className={styles.tags}>
             <div className={styles.tagsWrapper}>
               <input
@@ -62,7 +62,7 @@ const FilterComponent = ({
               />
               <label
                 className={styles.searchTag}
-                for={header === 'Brands' ? 'allBrands' : 'allTags'}
+                htmlFor={header === 'Brands' ? 'allBrands' : 'allTags'}
               >
                 All{' '}
                 <span className={styles.nameCount}>
@@ -77,7 +77,7 @@ const FilterComponent = ({
             {inputData.map((tag, index) => {
               return (
                 <Fragment>
-                  <div className={styles.tagsWrapper}>
+                  <div className={styles.tagsWrapper} key={index}>
                     <input
                       type="checkbox"
                       onClick={inputEvent}
@@ -85,9 +85,8 @@ const FilterComponent = ({
                       id={tag.slug ? tag.slug : tag}
                     />
                     <label
-                      key={index}
                       className={styles.searchTag}
-                      for={tag.slug ? tag.slug : tag}
+                      htmlFor={tag.slug ? tag.slug : tag}
                     >
                       {tag.slug
                         ? tag.slug.length > 20

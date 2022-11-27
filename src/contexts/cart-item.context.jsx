@@ -1,7 +1,17 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
-const productsUrl = 'https://market-workspace.netlify.app/items.json'
-const companiesUrl = 'https://market-workspace.netlify.app/companies.json'
+import itemsJson from '../items'
+import companiesJson from '../companies'
+const productsUrl = 'http://localhost:3001/items'
+const companiesUrl = 'http://market-workspace.netlify.app/companies.json'
+let config = {
+  headers: {
+    'Cache-Control': 'no-cache',
+    'Accept-Language': 'en',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+  },
+}
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -18,7 +28,6 @@ const addCartItem = (cartItems, productToAdd) => {
 
   return [...cartItems, { ...productToAdd, quantity: 1 }]
 }
-
 const removeCartItem = (cartItems, cartItemToRemove) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.added === cartItemToRemove.added
@@ -92,7 +101,11 @@ export const CartProvider = ({ children }) => {
   const [cartTotal, setCartTotal] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-
+  useEffect(() => {
+    setProducts(itemsJson)
+    setCompanies(companiesJson)
+    setPageCount(Math.ceil(itemsJson.length / 16))
+  }, [paginationItems])
   useEffect(() => {
     const newCartTotal = cartItems
       .reduce(
@@ -103,27 +116,29 @@ export const CartProvider = ({ children }) => {
     setCartTotal(newCartTotal)
   }, [cartItems])
 
-  useEffect(() => {
-    axios
-      .get(productsUrl)
-      .then((response, res) => {
-        setProducts(response.data)
-        setPageCount(Math.ceil(response.data.length / 16))
-      })
-      .catch((error) => {
-        console.log(error, 'err from products data fetch with app-context')
-      })
-  }, [])
-  useEffect(() => {
-    axios
-      .get(companiesUrl)
-      .then((response) => {
-        setCompanies(response.data)
-      })
-      .catch((error) => {
-        console.log(error, 'err from companies data fetch with app-context')
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get(productsUrl)
+  //     .then((response) => {
+  //       setProducts(response.data)
+  //       setPageCount(Math.ceil(response.data.length / 16))
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'err from products data fetch with app-context')
+  //     })
+  // }, [])
+  // console.log(itemsJson)
+
+  // useEffect(() => {
+  //   axios
+  //     .get(companiesUrl, config)
+  //     .then((response) => {
+  //       setCompanies(response.data)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'err from companies data fetch with app-context')
+  //     })
+  // }, [])
 
   useEffect(() => {
     const productTags = products.map((product) => product.tags)

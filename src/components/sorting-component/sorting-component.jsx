@@ -44,7 +44,7 @@ const SortingComponent = () => {
         <RadioInput
           name="sorting"
           value="oldToNew"
-          label="Price high to low"
+          label="Old to new"
           onClick={() => oldToNew(products)}
           isChecked={selectedInput === 'oldToNew'}
           handleChange={handleChange}

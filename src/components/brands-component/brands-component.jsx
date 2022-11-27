@@ -4,7 +4,7 @@ import { CartContext } from '../../contexts/cart-item.context'
 
 import FilterComponent from '../filter-component/filter.component'
 
-const BrandsComponent = (e) => {
+const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
   const {
