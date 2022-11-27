@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 How it Works
 After this clone, run from Terminal
 
@@ -24,4 +23,4 @@ After this clone, run from Terminal
 
 
 Based on the 3rd and 4th terminal commands, in this project the [json-server](https://www.npmjs.com/package/json-server "json-server") package is used to create a fake rest API. For more information: https://www.npmjs.com/package/json-server || https://github.com/typicode/json-server
->>>>>>> 264157d88c6cc351d53ee0541c3932eca87bf20d
+
