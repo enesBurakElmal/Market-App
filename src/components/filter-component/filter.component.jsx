@@ -10,6 +10,7 @@ const FilterComponent = ({
   header,
   inputEvent,
   productsData,
+  selectAll,
 }) => {
   const sameNameCountTags = (name) => {
     const count = productsData.filter((item) => item.tags.includes(name))
@@ -59,6 +60,7 @@ const FilterComponent = ({
                 type="checkbox"
                 className={styles.inputTag}
                 id={header === 'Brands' ? 'allBrands' : 'allTags'}
+                onClick={selectAll}
               />
               <label
                 className={styles.searchTag}

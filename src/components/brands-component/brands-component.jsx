@@ -7,14 +7,8 @@ import FilterComponent from '../filter-component/filter.component'
 const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
-  const {
-    filteredTags,
-    setSearchfield,
-    products,
-    setProducts,
-    setPageCount,
-    companies,
-  } = useContext(CartContext)
+  const { filteredTags, setSearchfield, products, setProducts, companies } =
+    useContext(CartContext)
   const handleSearch = (e) => {
     filteredTags(e.target.value)
     setSearchfield(e.target.value)
@@ -27,19 +21,20 @@ const BrandsComponent = () => {
   }
 
   useEffect(() => {
-    const filteredProducts = products.filter((product) =>
-      product.manufacturer
-        .toLowerCase()
-        .includes(selectedSlugs.map((slug) => slug.toLowerCase()))
-    )
     if (selectedSlugs.length === 0) {
       setProducts(allProducts)
-      setPageCount(Math.ceil(products.length / 16))
     } else {
-      setProducts(filteredProducts)
-      setPageCount(Math.ceil(filteredProducts.length / 16))
+      const afterSlugFilter = allProducts.filter((product) =>
+        selectedSlugs.includes(product.manufacturer)
+      )
+      setProducts(afterSlugFilter)
     }
-  }, [selectedSlugs, products, setProducts, setPageCount])
+  }, [selectedSlugs, products, setProducts])
+
+  const handleSelectAll = () => {
+    setProducts(allProducts)
+    setSelectedSlugs([])
+  }
 
   return (
     <Fragment>
@@ -49,6 +44,7 @@ const BrandsComponent = () => {
         productsData={products}
         searchfield={handleSearch}
         inputEvent={selectedCompanyFilter}
+        selectAll={handleSelectAll}
       />
     </Fragment>
   )

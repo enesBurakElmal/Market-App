@@ -86,6 +86,7 @@ export const CartContext = createContext({
   newToOld: () => {},
   oldToNew: () => {},
   selectMugOrShirt: () => {},
+  setProductsTags: () => {},
 })
 
 export let allProducts = []
@@ -145,7 +146,7 @@ export const CartProvider = ({ children }) => {
   }, [products, companies])
 
   useEffect(() => {
-    const productTags = products.map((product) => product.tags)
+    const productTags = allProducts.map((product) => product.tags)
     const tags = productTags.flat()
     const uniqueTags = [...new Set(tags)]
     setProductsTags(uniqueTags)
@@ -187,12 +188,9 @@ export const CartProvider = ({ children }) => {
       setPageCount(Math.ceil(filterOnTags(products, tagField).length / 16))
     }
   }, [tagField, products])
-
   const tagFilter = (tag) => {
     setTagField(filterOnTags(products, tag))
-    setProducts(filterOnTags(products, tag))
   }
-
   const filteredTags = (onFilter) => {
     setSearchfield(filterScript(products, onFilter))
     setProducts(filterScript(products, onFilter))
@@ -272,6 +270,7 @@ export const CartProvider = ({ children }) => {
     newToOld,
     oldToNew,
     selectMugOrShirt,
+    setProductsTags,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
