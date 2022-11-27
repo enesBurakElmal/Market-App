@@ -49,12 +49,13 @@ const FilterComponent = ({
           <SearchBox
             type="text"
             name="name"
-            placeholder="Search brand"
+            placeholder={`    Search brand`}
             searchChange={searchfield}
           />
+          <div style={{ height: window.innerHeight / 30 }}></div>
           <div className={styles.tags}>
-            <label>
-              <input type="checkbox" /> All{' '}
+            <label className={styles.searchTag}>
+              <input type="checkbox" className={styles.inputTag} /> All{' '}
               <span className={styles.nameCount}>
                 (
                 {header === 'Brands'
@@ -69,7 +70,7 @@ const FilterComponent = ({
                   <input type="checkbox" onClick={inputEvent} name={tag.slug} />
                   {tag.slug
                     ? tag.slug.length > 20
-                      ? sliceTag(tag.slug, 0, 25) + '...'
+                      ? sliceTag(tag.slug, 0, 20) + '...'
                       : tag.slug
                     : tag}
                   <span className={styles.nameCount}>

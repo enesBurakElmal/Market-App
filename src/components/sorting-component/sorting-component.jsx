@@ -4,29 +4,10 @@ import { CartContext } from '../../contexts/cart-item.context'
 import RadioInput from '../radio-button/radio-button.component'
 import styles from './sorting-component.module.scss'
 
-const SortingComponent = (sorting) => {
-  // const [favorite, setFavorite] = useState('')
-  const { lowToHigh } = useContext(CartContext)
+const SortingComponent = () => {
+  const { lowToHigh, highToLow, products, newToOld, oldToNew } =
+    useContext(CartContext)
   const [selectedInput, setSelectedInput] = useState('')
-
-  const handleLowToHigh = () => {
-    lowToHigh(sorting)
-    // setFavorite('lowToHigh')
-  }
-
-  // const handleHighToLow = () => {
-  //   highToLow(sorting)
-  //   setFavorite('highToLow')
-  // }
-
-  // const handleNewToOld = () => {
-  //   // tagFilter(sorting)
-  //   setFavorite('newToOld')
-  // }
-
-  // const handleOldToNew = () => {
-  //   setFavorite('oldToNew')
-  // }
 
   const handleChange = (inputValue) => {
     setSelectedInput(inputValue)
@@ -38,34 +19,34 @@ const SortingComponent = (sorting) => {
       <div className={styles.leftContent}>
         <RadioInput
           name="sorting"
-          value="lowToHigh2"
+          value="lowToHigh"
           label="Price low to high"
-          // onChange={handleLowToHigh}
-          isChecked={selectedInput === 'lowToHigh2'}
-          handleChange={handleChange}
-        />
-        <RadioInput
-          name="sorting"
-          value="highToLow2"
-          label="Price high to low"
-          onChange={handleLowToHigh}
-          isChecked={selectedInput === 'highToLow2'}
-          handleChange={handleChange}
-        />
-        <RadioInput
-          name="sorting"
-          value="enes"
-          label="Price low to high"
-          onChange={handleLowToHigh}
-          isChecked={selectedInput === 'enes'}
-          handleChange={handleChange}
-        />
-        <RadioInput
-          name="sorting"
-          value="lowToHight"
-          label="Price low to high"
-          onChange={handleLowToHigh}
+          onClick={() => lowToHigh(products)}
           isChecked={selectedInput === 'lowToHigh'}
+          handleChange={handleChange}
+        />
+        <RadioInput
+          name="sorting"
+          value="highToLow"
+          label="Price high to low"
+          onClick={() => highToLow(products)}
+          isChecked={selectedInput === 'highToLow'}
+          handleChange={handleChange}
+        />
+        <RadioInput
+          name="sorting"
+          value="newToOld"
+          label="New to old"
+          onClick={() => newToOld(products)}
+          isChecked={selectedInput === 'newToOld'}
+          handleChange={handleChange}
+        />
+        <RadioInput
+          name="sorting"
+          value="oldToNew"
+          label="Price high to low"
+          onClick={() => oldToNew(products)}
+          isChecked={selectedInput === 'oldToNew'}
           handleChange={handleChange}
         />
         {/* <span>✓</span> */}

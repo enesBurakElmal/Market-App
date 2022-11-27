@@ -38,16 +38,6 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
   )
 }
 
-const lowToHighFilter = (products) => {
-  const sortedProducts = products.sort((a, b) => a.price - b.price)
-  return sortedProducts
-}
-
-const highToLowFilter = (products) => {
-  const sortedProducts = products.sort((a, b) => b.price - a.price)
-  return sortedProducts
-}
-
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.added !== cartItemToClear.added)
 
@@ -57,14 +47,6 @@ const filterScript = (products, searchfield) => {
   )
   return filteredProducts
 }
-
-// const filterOnTags = (products, tags) => {
-//   const filteredProductTags = products.filter((item) => {
-//     return [item.tags.includes(tags)]
-//   })
-//   console.log(filteredProductTags, 'current products after search')
-//   return filteredProductTags
-// }
 
 export const CartContext = createContext({
   isCartOpen: false,
@@ -93,6 +75,8 @@ export const CartContext = createContext({
   setTagField: () => {},
   productsTags: [],
   companies: [],
+  newToOld: () => {},
+  oldToNew: () => {},
 })
 
 export const CartProvider = ({ children }) => {
@@ -104,7 +88,7 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
   const [searchfield, setSearchfield] = useState('')
-  const [tagField, setTagField] = useState('') //buradan devam edilecek, fonksiyonlardaki searchfieldler duzeltilecek,  tags componenti de ayni sekilde
+  const [tagField, setTagField] = useState('')
   const [cartTotal, setCartTotal] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
@@ -118,14 +102,12 @@ export const CartProvider = ({ children }) => {
       .toFixed(2)
     setCartTotal(newCartTotal)
   }, [cartItems])
-  console.log('products')
   useEffect(() => {
     axios
       .get(productsUrl)
       .then((response) => {
         setProducts(response.data)
         setPageCount(Math.ceil(response.data.length / 16))
-        console.log(response.data, 'products')
       })
       .catch((error) => {
         console.log(error, 'err from products data fetch with app-context')
@@ -141,11 +123,7 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from companies data fetch with app-context')
       })
   }, [])
-  // useEffect(() => {
-  //   setProducts(products)
-  //   // setPaginationItems(products)
-  //   // setPageCount(Math.ceil(products.length / 16))
-  // }, [products])
+
   useEffect(() => {
     const productTags = products.map((product) => product.tags)
     const tags = productTags.flat()
@@ -172,11 +150,9 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (searchfield === '') {
       setProducts(products)
-      // setPageCount(Math.ceil(products / 16))
     }
     if (searchfield !== '') {
       setProducts(filterScript(products, searchfield))
-      // setPageCount(Math.ceil(filterScript(products, searchfield).length / 16))
     }
   }, [searchfield, products])
 
@@ -200,14 +176,24 @@ export const CartProvider = ({ children }) => {
     setProducts(filterScript(products, onFilter))
   }
 
-  const lowToHigh = (productLowToHigh) => {
-    const sortedProducts = lowToHighFilter(products)
-    setProducts(sortedProducts, productLowToHigh)
+  const lowToHigh = (products) => {
+    const sortedProducts = products.sort((a, b) => a.price - b.price)
+    setPaginationItems(currentPageProducts(sortedProducts, currentPage))
   }
 
-  const highToLow = (productHighToLow) => {
-    const sortedProducts = highToLowFilter(products)
-    setProducts(sortedProducts, productHighToLow)
+  const highToLow = (products) => {
+    const sortedProducts = products.sort((a, b) => b.price - a.price)
+    setPaginationItems(currentPageProducts(sortedProducts, currentPage))
+  }
+
+  const newToOld = (products) => {
+    const sortedProducts = products.sort((a, b) => b.added - a.added)
+    setPaginationItems(currentPageProducts(sortedProducts, currentPage))
+  }
+
+  const oldToNew = (products) => {
+    const sortedProducts = products.sort((a, b) => a.added - b.added)
+    setPaginationItems(currentPageProducts(sortedProducts, currentPage))
   }
 
   const addItemToCart = (productToAdd) => {
@@ -242,7 +228,6 @@ export const CartProvider = ({ children }) => {
     setCurrentPage,
     setPageCount,
     currentPageProducts,
-    lowToHighFilter,
     setSearchfield,
     highToLow,
     tagFilter,
@@ -250,6 +235,8 @@ export const CartProvider = ({ children }) => {
     productsTags,
     setCartCount,
     companies,
+    newToOld,
+    oldToNew,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

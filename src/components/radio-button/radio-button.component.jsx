@@ -1,6 +1,13 @@
 import styles from './radio-button.module.scss'
 
-const RadioInput = ({ name, label, value, isChecked, handleChange }) => {
+const RadioInput = ({
+  name,
+  label,
+  value,
+  isChecked,
+  handleChange,
+  onClick,
+}) => {
   const handleRadioChange = (e) => {
     const { id } = e.currentTarget
     handleChange(id)
@@ -15,6 +22,7 @@ const RadioInput = ({ name, label, value, isChecked, handleChange }) => {
         id={value}
         checked={isChecked}
         onChange={handleRadioChange}
+        onClick={onClick}
       />
       <label htmlFor={value} className={styles.label}>
         <span>{label}</span>
