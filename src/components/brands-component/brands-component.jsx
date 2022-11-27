@@ -27,19 +27,16 @@ const BrandsComponent = () => {
   }
 
   useEffect(() => {
-    const filteredProducts = products.filter((product) =>
-      product.manufacturer
-        .toLowerCase()
-        .includes(selectedSlugs.map((slug) => slug.toLowerCase()))
-    )
     if (selectedSlugs.length === 0) {
       setProducts(allProducts)
-      setPageCount(Math.ceil(products.length / 16))
     } else {
-      setProducts(filteredProducts)
-      setPageCount(Math.ceil(filteredProducts.length / 16))
+      setProducts(
+        allProducts.filter((product) =>
+          selectedSlugs.includes(product.manufacturer)
+        )
+      )
     }
-  }, [selectedSlugs, products, setProducts, setPageCount])
+  }, [selectedSlugs, products, setProducts])
 
   return (
     <Fragment>
