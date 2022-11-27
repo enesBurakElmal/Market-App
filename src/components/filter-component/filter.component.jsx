@@ -4,8 +4,6 @@ import SearchBox from '../search-box/search-box.component'
 
 import styles from './filter.module.scss'
 
-import { allProducts } from '../../contexts/cart-item.context'
-
 const FilterComponent = ({
   searchfield,
   inputData,

@@ -77,6 +77,7 @@ export const CartContext = createContext({
   newToOld: () => {},
   oldToNew: () => {},
   selectMugOrShirt: () => {},
+  setProductsTags: () => {},
 })
 
 export let allProducts = []
@@ -129,7 +130,7 @@ export const CartProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const productTags = products.map((product) => product.tags)
+    const productTags = allProducts.map((product) => product.tags)
     const tags = productTags.flat()
     const uniqueTags = [...new Set(tags)]
     setProductsTags(uniqueTags)
@@ -253,6 +254,7 @@ export const CartProvider = ({ children }) => {
     newToOld,
     oldToNew,
     selectMugOrShirt,
+    setProductsTags,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

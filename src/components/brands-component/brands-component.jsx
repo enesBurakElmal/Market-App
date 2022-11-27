@@ -24,11 +24,10 @@ const BrandsComponent = () => {
     if (selectedSlugs.length === 0) {
       setProducts(allProducts)
     } else {
-      setProducts(
-        allProducts.filter((product) =>
-          selectedSlugs.includes(product.manufacturer)
-        )
+      const afterSlugFilter = allProducts.filter((product) =>
+        selectedSlugs.includes(product.manufacturer)
       )
+      setProducts(afterSlugFilter)
     }
   }, [selectedSlugs, products, setProducts])
 

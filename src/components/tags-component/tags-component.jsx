@@ -5,8 +5,14 @@ import { CartContext, allProducts } from '../../contexts/cart-item.context'
 import FilterComponent from '../filter-component/filter.component'
 
 const TagsComponent = () => {
-  const { tagFilter, setTagField, productsTags, products, setProducts } =
-    useContext(CartContext)
+  const {
+    tagFilter,
+    setTagField,
+    productsTags,
+    products,
+    setProducts,
+    setProductsTags,
+  } = useContext(CartContext)
   const [handleTag, setHandleTag] = useState([])
 
   const handleTagFilter = (e) => {
@@ -24,9 +30,10 @@ const TagsComponent = () => {
     if (handleTag.length === 0) {
       setProducts(allProducts)
     } else {
-      setProducts(
-        allProducts.filter((product) => handleTag.includes(product.tags[0]))
+      const afterTagFilter = allProducts.filter((product) =>
+        product.tags.includes(handleTag.join())
       )
+      setProducts(afterTagFilter)
     }
   }, [handleTag, products, setProducts])
 
