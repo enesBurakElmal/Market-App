@@ -1,5 +1,4 @@
-How it Works
-
+<h1> How it Works </h1>
 
 After this clone, run from Terminal
 
