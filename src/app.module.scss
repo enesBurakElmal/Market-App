@@ -3,32 +3,53 @@ $checkbox-border: #cecece;
 $checkbox-selected: #1ea4ce;
 
 .appContainer {
+  position: relative;
   width: 100%;
-  margin: auto;
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-  }
   .appWrapper {
     display: flex;
     max-width: 80%;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  .shortColumn {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 25%;
-    margin-bottom: auto;
-  }
-  .middleColumn {
-    width: 50%;
-    height: 100%;
-    background-color: white;
-    display: flex;
-    flex-wrap: wrap;
+    // margin-top: 60px;
+    position: relative;
+    @media (max-width: 768px) {
+      // flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
+      // max-width: 100%;
+    }
+    .shortColumn {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      width: 25%;
+      @media (max-width: 768px) {
+        width: 50%;
+        // margin: 0 auto;
+        // flex-direction: row;
+        // flex-wrap: nowrap;
+        // justify-content: center;
+        // align-items: center;
+      }
+    }
+    // .absolute {
+    //   border: 1px solid red;
+    //   position: absolute;
+    //   top: 0;
+    //   right: 0;
+    // }
+    .middleColumn {
+      width: 50%;
+      height: 100%;
+      background-color: white;
+      display: flex;
+      flex-wrap: wrap;
+      @media (max-width: 768px) {
+        width: 50%;
+        // flex-direction: row;
+      }
+    }
   }
 }
 

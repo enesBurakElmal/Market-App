@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
+
+export let allProducts = []
 const productsUrl = 'http://localhost:3001/items'
 const companiesUrl = 'http://localhost:3002/companies'
 
@@ -79,8 +81,6 @@ export const CartContext = createContext({
   selectMugOrShirt: () => {},
   setProductsTags: () => {},
 })
-
-export let allProducts = []
 
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false)

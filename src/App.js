@@ -14,10 +14,21 @@ import styles from './app.module.scss'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      width: window.innerWidth,
+      checkoutPopup: false,
+    }
+  }
+
+  popupController = () => {
+    this.setState({ checkoutPopup: !this.state.checkoutPopup })
   }
 
   render() {
+    const width = this.state.width
+    
+    const popupController = this.popupController
+    
     return (
       <Fragment>
         <Navbar />
@@ -32,7 +43,10 @@ class App extends Component {
             <div className={styles.middleColumn}>
               <EmployeesIndex />
             </div>
-            <div className={styles.shortColumn}>
+            <div
+              className={`${styles.shortColumn} ${styles.absolute}`}
+              onClick={this.popupController}
+            >
               <PayloadComponent cartItem={this.props.cartItem} />
             </div>
           </div>
