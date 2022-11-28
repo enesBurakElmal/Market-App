@@ -142,12 +142,14 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     setProducts(itemsJson)
     setCompanies(companiesJson)
+    allProducts = itemsJson
     setPageCount(Math.ceil(products.length / 16))
   }, [products, companies])
 
   useEffect(() => {
     const productTags = allProducts.map((product) => product.tags)
     const tags = productTags.flat()
+
     const uniqueTags = [...new Set(tags)]
     setProductsTags(uniqueTags)
   }, [products])
