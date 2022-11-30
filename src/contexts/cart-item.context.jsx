@@ -155,13 +155,18 @@ export const CartProvider = ({ children }) => {
   }, [products, currentPage])
 
   useEffect(() => {
-    if (searchfield === '') {
-      setProducts(products)
-    }
     if (searchfield !== '') {
-      setProducts(filterScript(products, searchfield))
+      const result = allProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchfield.toLowerCase())
+      )
+      setPaginationItems(currentPageProducts(result, currentPage))
+      setPageCount(Math.ceil(result.length / 16))
+    } else {
+      setPaginationItems(currentPageProducts(products, currentPage))
+      setPageCount(Math.ceil(allProducts.length / 16))
+      setSearchfield('')
     }
-  }, [searchfield, products])
+  }, [searchfield, currentPage, products])
 
   useEffect(() => {
     if (tagField === '') {
