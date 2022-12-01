@@ -25,10 +25,10 @@ class App extends Component {
   }
 
   render() {
-    const width = this.state.width
-    
-    const popupController = this.popupController
-    
+    // const width = this.state.width
+
+    // const popupController = this.popupController
+
     return (
       <Fragment>
         <Navbar />

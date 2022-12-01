@@ -48,7 +48,12 @@ const filterScript = (products, searchfield) => {
   )
   return filteredProducts
 }
-
+const currentPageProducts = (products, page) => {
+  const startIndex = (page - 1) * 16
+  const endIndex = page * 16
+  const productsToDisplay = products.slice(startIndex, endIndex)
+  return productsToDisplay
+}
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
@@ -112,6 +117,7 @@ export const CartProvider = ({ children }) => {
       .then((response) => {
         setProducts(response.data)
         allProducts = response.data
+        // setPageCount(Math.ceil(response.data.length / 16))
       })
       .catch((error) => {
         console.log(error, 'err from products data fetch with app-context')
@@ -130,56 +136,38 @@ export const CartProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const productTags = allProducts.map((product) => product.tags)
-    const tags = productTags.flat()
-    const uniqueTags = [...new Set(tags)]
-    setProductsTags(uniqueTags)
-  }, [products])
-
-  const filterOnTags = (products, tag) => {
-    const filteredProducts = products.filter((product) =>
-      product.tags.includes(tag)
-    )
-    return filteredProducts
-  }
-  const currentPageProducts = (products, page) => {
-    const startIndex = (page - 1) * 16
-    const endIndex = page * 16
-    const productsToDisplay = products.slice(startIndex, endIndex)
-    return productsToDisplay
-  }
-
-  useEffect(() => {
     setPaginationItems(currentPageProducts(products, currentPage))
     setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
 
   useEffect(() => {
-    if (searchfield !== '') {
-      const result = allProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchfield.toLowerCase())
-      )
-      setPaginationItems(currentPageProducts(result, currentPage))
-      setPageCount(Math.ceil(result.length / 16))
-    } else {
-      setPaginationItems(currentPageProducts(products, currentPage))
-      setPageCount(Math.ceil(allProducts.length / 16))
-      setSearchfield('')
-    }
-  }, [searchfield, currentPage, products])
-
+    const productTags = allProducts.map((product) => product.tags)
+    const tags = productTags.flat()
+    const uniqueTags = [...new Set(tags)]
+    setProductsTags(uniqueTags)
+  }, [products])
+  const tagFilter = (tag) => {
+    setTagField(tag)
+  }
+  const filterOnTags = () => {
+    const filteredProducts = allProducts.filter((product) =>
+      product.name.toLowerCase().includes(tagField.toLowerCase())
+    )
+    return filteredProducts
+  }
   useEffect(() => {
     if (tagField === '') {
-      setProducts(products)
+      setProducts(allProducts)
+      // setPageCount(Math.ceil(allProducts.length / 16))
+    } else {
+      const filteredProducts = filterOnTags()
+      // console.log(filteredProducts)
+      setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+      // setPageCount(Math.ceil(filteredProducts.length / 16))
+      // setProducts(filterOnTags())
     }
-    if (tagField !== '') {
-      setProducts(filterOnTags(products, tagField))
-      setPageCount(Math.ceil(filterOnTags(products, tagField).length / 16))
-    }
-  }, [tagField, products])
-  const tagFilter = (tag) => {
-    setTagField(filterOnTags(products, tag))
-  }
+  }, [tagField])
+
   const filteredTags = (onFilter) => {
     setSearchfield(filterScript(products, onFilter))
     setProducts(filterScript(products, onFilter))

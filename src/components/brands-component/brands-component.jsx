@@ -21,13 +21,13 @@ const BrandsComponent = () => {
   }
 
   useEffect(() => {
-    if (selectedSlugs.length === 0) {
-      setProducts(allProducts)
-    } else {
+    if (selectedSlugs.length > 0) {
       const afterSlugFilter = allProducts.filter((product) =>
         selectedSlugs.includes(product.manufacturer)
       )
       setProducts(afterSlugFilter)
+    } else {
+      setProducts(allProducts)
     }
   }, [selectedSlugs, products, setProducts])
 
