@@ -5,14 +5,15 @@ import { CartContext, allProducts } from '../../contexts/cart-item.context'
 import FilterComponent from '../filter-component/filter.component'
 
 const TagsComponent = () => {
-  const { tagFilter, setTagField, productsTags, products, setProducts } =
+  const { productsTags, products, setProducts, brandsFilter } =
     useContext(CartContext)
   const [handleTag, setHandleTag] = useState([])
 
-  const handleTagFilter = (e) => {
-    tagFilter(e.target.value)
-    setTagField(e.target.value)
-  }
+  // const handleTagFilter = (e) => {
+  //   tagFilter(e.target.value)
+  // }
+
+  const handleSearch = (e) => brandsFilter(e.target.value)
 
   const selectedTagFilter = (e) => {
     setHandleTag([...handleTag, e.target.name])
@@ -25,7 +26,10 @@ const TagsComponent = () => {
       setProducts(allProducts)
     } else {
       const afterTagFilter = allProducts.filter((product) =>
-        product.tags.includes(handleTag.join())
+        handleTag
+          .map((tag) => product.tags.map((productTag) => productTag === tag))
+          .flat()
+          .includes(true)
       )
       setProducts(afterTagFilter)
     }
@@ -42,7 +46,7 @@ const TagsComponent = () => {
         header="Tags"
         inputData={productsTags}
         productsData={products}
-        searchfield={handleTagFilter}
+        searchfield={handleSearch}
         inputEvent={selectedTagFilter}
         selectAll={handleSelectAll}
       />

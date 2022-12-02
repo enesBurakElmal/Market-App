@@ -18,7 +18,7 @@
       display: flex;
       flex-direction: column;
       text-align: start;
-      max-height: 274px;
+      max-height: 150px;
       overflow-x: hidden;
       overflow-y: auto;
       .tagsWrapper {
@@ -48,13 +48,13 @@
 }
 
 ::-webkit-scrollbar {
-  height: 55px;
+  height: 80px;
   width: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #e0e0e0;
-  height: 145px;
+  height: 80px;
 }
 -webkit-scrollbar-track {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 15);

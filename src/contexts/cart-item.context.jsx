@@ -1,7 +1,12 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
+<<<<<<< HEAD
 import itemsJson from '../items'
 import companiesJson from '../companies'
+=======
+
+export let allProducts = []
+>>>>>>> master
 const productsUrl = 'http://localhost:3001/items'
 const companiesUrl = 'http://market-workspace.netlify.app/companies.json'
 let config = {
@@ -49,13 +54,12 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.added !== cartItemToClear.added)
 
-const filterScript = (products, searchfield) => {
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchfield.toLowerCase())
-  )
-  return filteredProducts
+const currentPageProducts = (products, page) => {
+  const startIndex = (page - 1) * 16
+  const endIndex = page * 16
+  const productsToDisplay = products.slice(startIndex, endIndex)
+  return productsToDisplay
 }
-
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
@@ -63,7 +67,7 @@ export const CartContext = createContext({
   addItemToCart: () => {},
   removeItemFromCart: () => {},
   clearItemFromCart: () => {},
-  filteredTags: () => {},
+  brandsFilter: () => {},
   cartCount: 0,
   cartTotal: 0,
   products: [],
@@ -89,8 +93,6 @@ export const CartContext = createContext({
   setProductsTags: () => {},
 })
 
-export let allProducts = []
-
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [products, setProducts] = useState([])
@@ -115,6 +117,7 @@ export const CartProvider = ({ children }) => {
     setCartTotal(newCartTotal)
   }, [cartItems])
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   axios
   //     .get(productsUrl)
@@ -138,6 +141,20 @@ export const CartProvider = ({ children }) => {
   //       console.log(error, 'err from companies data fetch with app-context')
   //     })
   // }, [])
+=======
+  useEffect(() => {
+    axios
+      .get(productsUrl)
+      .then((response) => {
+        setProducts(response.data)
+        allProducts = response.data
+        // setPageCount(Math.ceil(response.data.length / 16))
+      })
+      .catch((error) => {
+        console.log(error, 'err from products data fetch with app-context')
+      })
+  }, [])
+>>>>>>> master
 
   useEffect(() => {
     setProducts(itemsJson)
@@ -147,6 +164,7 @@ export const CartProvider = ({ children }) => {
   }, [products, companies])
 
   useEffect(() => {
+<<<<<<< HEAD
     const productTags = allProducts.map((product) => product.tags)
     const tags = productTags.flat()
 
@@ -168,34 +186,65 @@ export const CartProvider = ({ children }) => {
   }
 
   useEffect(() => {
+=======
+>>>>>>> master
     setPaginationItems(currentPageProducts(products, currentPage))
     setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
 
   useEffect(() => {
-    if (searchfield === '') {
-      setProducts(products)
-    }
-    if (searchfield !== '') {
-      setProducts(filterScript(products, searchfield))
-    }
-  }, [searchfield, products])
+    const productTags = allProducts.map((product) => product.tags)
+    const tags = productTags.flat()
+    const uniqueTags = [...new Set(tags)]
+    setProductsTags(uniqueTags)
+  }, [products])
+  const tagFilter = (tag) => {
+    setTagField(tag)
+  }
+
+  const slugs = companies.map((company) => company.slug.toLowerCase())
+
+  const inputFilterCompaniesSlug = () => {
+    const filterWithSlug = slugs.filter((slug) =>
+      slug.includes(tagField.toLowerCase())
+    )
+    const tagsFilterProducts = allProducts.filter((product) =>
+      filterWithSlug.includes(product.slug.toLowerCase())
+    )
+
+    // const filterWithSlugCompaniesId = filterWithSlugCompanies.map(
+    //   (company) => company.added
+    // )
+    // const filterWithSlugProducts = allProducts.filter((product) =>
+    //   filterWithSlugCompaniesId.includes(product.companyId)
+    // )
+    console.log(filterWithSlug, 'kekw')
+  }
+
+  // console.log(companiesSlug, 'companiesSlug', filteredProductsSlug, '2')
+  // console.log(filteredProductsSlug)
+  // return filteredProductsSlug
+  // inputFilterCompaniesSlug()
 
   useEffect(() => {
     if (tagField === '') {
-      setProducts(products)
+      setProducts(allProducts)
+      // setPageCount(Math.ceil(allProducts.length / 16))
+    } else {
+      const filteredProducts = inputFilterCompaniesSlug()
+      // console.log(filteredProducts)
+      // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+      // setPageCount(Math.ceil(filteredProducts.length / 16))
+      // setProducts(filterOnTags())
     }
-    if (tagField !== '') {
-      setProducts(filterOnTags(products, tagField))
-      setPageCount(Math.ceil(filterOnTags(products, tagField).length / 16))
-    }
-  }, [tagField, products])
-  const tagFilter = (tag) => {
-    setTagField(filterOnTags(products, tag))
-  }
-  const filteredTags = (onFilter) => {
-    setSearchfield(filterScript(products, onFilter))
-    setProducts(filterScript(products, onFilter))
+  }, [tagField])
+
+  const brandsFilter = (searchfield) => {
+    const filteredProducts = allProducts.filter((product) =>
+      product.name.toLowerCase().includes(searchfield.toLowerCase())
+    )
+    setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+    setPageCount(Math.ceil(filteredProducts.length / 16))
   }
 
   const selectMugOrShirt = (label) => {
@@ -246,7 +295,7 @@ export const CartProvider = ({ children }) => {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
-    filteredTags,
+    brandsFilter,
     removeItemToCart,
     clearItemFromCart,
     cartItems,

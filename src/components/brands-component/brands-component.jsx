@@ -7,12 +7,10 @@ import FilterComponent from '../filter-component/filter.component'
 const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
-  const { filteredTags, setSearchfield, products, setProducts, companies } =
+  const { brandsFilter, products, setProducts, companies } =
     useContext(CartContext)
-  const handleSearch = (e) => {
-    filteredTags(e.target.value)
-    setSearchfield(e.target.value)
-  }
+
+  const handleSearch = (e) => brandsFilter(e.target.value)
   const selectedCompanyFilter = (e) => {
     setSelectedSlugs([...selectedSlugs, e.target.name])
     if (selectedSlugs.includes(e.target.name)) {
@@ -21,13 +19,13 @@ const BrandsComponent = () => {
   }
 
   useEffect(() => {
-    if (selectedSlugs.length === 0) {
-      setProducts(allProducts)
-    } else {
+    if (selectedSlugs.length > 0) {
       const afterSlugFilter = allProducts.filter((product) =>
         selectedSlugs.includes(product.manufacturer)
       )
       setProducts(afterSlugFilter)
+    } else {
+      setProducts(allProducts)
     }
   }, [selectedSlugs, products, setProducts])
 
