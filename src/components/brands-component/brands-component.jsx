@@ -7,12 +7,10 @@ import FilterComponent from '../filter-component/filter.component'
 const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
-  const { filteredTags, setSearchfield, products, setProducts, companies } =
+  const { brandsFilter, products, setProducts, companies } =
     useContext(CartContext)
-  const handleSearch = (e) => {
-    filteredTags(e.target.value)
-    setSearchfield(e.target.value)
-  }
+
+  const handleSearch = (e) => brandsFilter(e.target.value)
   const selectedCompanyFilter = (e) => {
     setSelectedSlugs([...selectedSlugs, e.target.name])
     if (selectedSlugs.includes(e.target.name)) {

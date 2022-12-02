@@ -50,7 +50,9 @@ const FilterComponent = ({
           <SearchBox
             type="text"
             name="name"
-            placeholder={`    Search brand`}
+            placeholder={
+              header === 'Tags' ? '    Search tags' : '    Search brands'
+            }
             searchChange={searchfield}
           />
           <div style={{ height: window.innerHeight / 30 }}></div>

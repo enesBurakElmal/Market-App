@@ -42,12 +42,6 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.added !== cartItemToClear.added)
 
-const filterScript = (products, searchfield) => {
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchfield.toLowerCase())
-  )
-  return filteredProducts
-}
 const currentPageProducts = (products, page) => {
   const startIndex = (page - 1) * 16
   const endIndex = page * 16
@@ -61,7 +55,7 @@ export const CartContext = createContext({
   addItemToCart: () => {},
   removeItemFromCart: () => {},
   clearItemFromCart: () => {},
-  filteredTags: () => {},
+  brandsFilter: () => {},
   cartCount: 0,
   cartTotal: 0,
   products: [],
@@ -149,28 +143,50 @@ export const CartProvider = ({ children }) => {
   const tagFilter = (tag) => {
     setTagField(tag)
   }
-  const filterOnTags = () => {
-    const filteredProducts = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(tagField.toLowerCase())
+
+  const slugs = companies.map((company) => company.slug.toLowerCase())
+
+  const inputFilterCompaniesSlug = () => {
+    const filterWithSlug = slugs.filter((slug) =>
+      slug.includes(tagField.toLowerCase())
     )
-    return filteredProducts
+    const tagsFilterProducts = allProducts.filter((product) =>
+      filterWithSlug.includes(product.slug.toLowerCase())
+    )
+
+    // const filterWithSlugCompaniesId = filterWithSlugCompanies.map(
+    //   (company) => company.added
+    // )
+    // const filterWithSlugProducts = allProducts.filter((product) =>
+    //   filterWithSlugCompaniesId.includes(product.companyId)
+    // )
+    console.log(filterWithSlug, 'kekw')
   }
+
+  // console.log(companiesSlug, 'companiesSlug', filteredProductsSlug, '2')
+  // console.log(filteredProductsSlug)
+  // return filteredProductsSlug
+  // inputFilterCompaniesSlug()
+
   useEffect(() => {
     if (tagField === '') {
       setProducts(allProducts)
       // setPageCount(Math.ceil(allProducts.length / 16))
     } else {
-      const filteredProducts = filterOnTags()
+      const filteredProducts = inputFilterCompaniesSlug()
       // console.log(filteredProducts)
-      setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+      // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
       // setPageCount(Math.ceil(filteredProducts.length / 16))
       // setProducts(filterOnTags())
     }
   }, [tagField])
 
-  const filteredTags = (onFilter) => {
-    setSearchfield(filterScript(products, onFilter))
-    setProducts(filterScript(products, onFilter))
+  const brandsFilter = (searchfield) => {
+    const filteredProducts = allProducts.filter((product) =>
+      product.name.toLowerCase().includes(searchfield.toLowerCase())
+    )
+    setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+    setPageCount(Math.ceil(filteredProducts.length / 16))
   }
 
   const selectMugOrShirt = (label) => {
@@ -221,7 +237,7 @@ export const CartProvider = ({ children }) => {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
-    filteredTags,
+    brandsFilter,
     removeItemToCart,
     clearItemFromCart,
     cartItems,
