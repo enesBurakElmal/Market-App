@@ -1,4 +1,4 @@
-const items = [
+const itemsJson = [
   {
     tags: ['Trees'],
     price: 10.99,
@@ -19117,4 +19117,4 @@ const items = [
   },
 ]
 
-export default items
+export default itemsJson

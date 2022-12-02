@@ -1,12 +1,9 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
-<<<<<<< HEAD
-import itemsJson from '../items'
 import companiesJson from '../companies'
-=======
+import itemsJson from '../items'
 
 export let allProducts = []
->>>>>>> master
 const productsUrl = 'http://localhost:3001/items'
 const companiesUrl = 'http://market-workspace.netlify.app/companies.json'
 let config = {
@@ -117,31 +114,6 @@ export const CartProvider = ({ children }) => {
     setCartTotal(newCartTotal)
   }, [cartItems])
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   axios
-  //     .get(productsUrl)
-  //     .then((response) => {
-  //       setProducts(response.data)
-  //       setPageCount(Math.ceil(response.data.length / 16))
-  //     })
-  //     .catch((error) => {
-  //       console.log(error, 'err from products data fetch with app-context')
-  //     })
-  // }, [])
-  // console.log(itemsJson)
-
-  // useEffect(() => {
-  //   axios
-  //     .get(companiesUrl, config)
-  //     .then((response) => {
-  //       setCompanies(response.data)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error, 'err from companies data fetch with app-context')
-  //     })
-  // }, [])
-=======
   useEffect(() => {
     axios
       .get(productsUrl)
@@ -154,7 +126,6 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from products data fetch with app-context')
       })
   }, [])
->>>>>>> master
 
   useEffect(() => {
     setProducts(itemsJson)
@@ -164,30 +135,6 @@ export const CartProvider = ({ children }) => {
   }, [products, companies])
 
   useEffect(() => {
-<<<<<<< HEAD
-    const productTags = allProducts.map((product) => product.tags)
-    const tags = productTags.flat()
-
-    const uniqueTags = [...new Set(tags)]
-    setProductsTags(uniqueTags)
-  }, [products])
-
-  const filterOnTags = (products, tag) => {
-    const filteredProducts = products.filter((product) =>
-      product.tags.includes(tag)
-    )
-    return filteredProducts
-  }
-  const currentPageProducts = (products, page) => {
-    const startIndex = (page - 1) * 16
-    const endIndex = page * 16
-    const productsToDisplay = products.slice(startIndex, endIndex)
-    return productsToDisplay
-  }
-
-  useEffect(() => {
-=======
->>>>>>> master
     setPaginationItems(currentPageProducts(products, currentPage))
     setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
