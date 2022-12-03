@@ -9,10 +9,6 @@ const TagsComponent = () => {
     useContext(CartContext)
   const [handleTag, setHandleTag] = useState([])
 
-  // const handleTagFilter = (e) => {
-  //   tagFilter(e.target.value)
-  // }
-
   const handleSearch = (e) => brandsFilter(e.target.value)
 
   const selectedTagFilter = (e) => {
@@ -31,6 +27,7 @@ const TagsComponent = () => {
           .flat()
           .includes(true)
       )
+      console.log(afterTagFilter, 'here')
       setProducts(afterTagFilter)
     }
   }, [handleTag])

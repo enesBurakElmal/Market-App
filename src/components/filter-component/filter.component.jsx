@@ -55,7 +55,7 @@ const FilterComponent = ({
             }
             searchChange={searchfield}
           />
-          <div style={{ height: window.innerHeight / 30 }}></div>
+          <div style={{ height: window.innerHeight / 30 }} />
           <div className={styles.tags}>
             <div className={styles.tagsWrapper}>
               <input
@@ -70,9 +70,10 @@ const FilterComponent = ({
               >
                 All{' '}
                 <span className={styles.nameCount}>
-                  {header === 'Brands' && brandsTotalCount(productsData)}
+                  ({header === 'Brands' && brandsTotalCount(productsData)}
                   {header === 'Tags' &&
                     productsTotalTagCount(productsData).length}
+                  )
                 </span>
               </label>
             </div>
@@ -97,8 +98,8 @@ const FilterComponent = ({
                         : tag}
                     </label>{' '}
                     <span className={styles.nameCount}>
-                      {tag.slug && sameNameCountBrands(productsData, tag.slug)}
-                      {tag && sameNameCountTags(tag)}
+                      ({tag.slug && sameNameCountBrands(productsData, tag.slug)}
+                      {tag && sameNameCountTags(tag)})
                     </span>
                   </div>
                 </Fragment>

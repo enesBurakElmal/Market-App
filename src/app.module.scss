@@ -47,7 +47,9 @@ $checkbox-selected: #1ea4ce;
     }
   }
 }
-
+.checkout {
+  transition: 0.3s;
+}
 ::placeholder {
   color: #ababab;
 }

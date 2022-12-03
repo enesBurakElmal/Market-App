@@ -6,20 +6,29 @@ import ProductImage from '../../assets/github-logo.png'
 import styles from './display-products.module.scss'
 
 const EmployeesIndex = () => {
-  const [buttonLabel, setButtonLabel] = useState('mug')
-
+  const [buttonLabel, setButtonLabel] = useState('')
   const {
     addItemToCart,
     paginationItems,
     pageCount,
     setCurrentPage,
-    selectMugOrShirt,
+    filterWithItemTypes,
     products,
   } = useContext(CartContext)
 
   const handlePageClick = (onPage) => {
     const newOffset = (onPage.selected % products.length) + 1
     setCurrentPage(newOffset)
+  }
+
+  const handleFilter = (e) => {
+    setButtonLabel(e.target.value)
+    filterWithItemTypes(e.target.value)
+    if (buttonLabel === e.target.value) {
+      setButtonLabel('')
+    } else {
+      setButtonLabel(e.target.value)
+    }
   }
 
   const FilterButton = ({ label, onFilter }) => {
@@ -44,13 +53,11 @@ const EmployeesIndex = () => {
           <div className={styles.button__content}>
             <FilterButton
               label={'mug'}
-              onFilter={() => setButtonLabel('mug') || selectMugOrShirt('mug')}
+              onFilter={() => handleFilter({ target: { value: 'mug' } })}
             />
             <FilterButton
               label={'shirt'}
-              onFilter={() =>
-                setButtonLabel('shirt') || selectMugOrShirt('shirt')
-              }
+              onFilter={() => handleFilter({ target: { value: 'shirt' } })}
             />
           </div>
         </div>
@@ -99,7 +106,7 @@ const EmployeesIndex = () => {
           nextLinkClassName={styles.nextButton}
           disabledClassName={styles.navigationDisabled}
           activeLinkClassName={styles.navigationActive}
-          // renderOnZeroPageCount={null}
+          // renderOnZeroPageC  ount={null}
         />
       </div>
     </Fragment>

@@ -20,7 +20,6 @@ const addCartItem = (cartItems, productToAdd) => {
 
   return [...cartItems, { ...productToAdd, quantity: 1 }]
 }
-
 const removeCartItem = (cartItems, cartItemToRemove) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.added === cartItemToRemove.added
@@ -41,6 +40,20 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.added !== cartItemToClear.added)
+
+const getProductTags = (arr) => {
+  const productTags = arr.map((product) => product.tags)
+  const tags = productTags.flat()
+  let uniqueTags = [...new Set(tags)]
+  return uniqueTags
+}
+
+const currentPageProducts = (products, page) => {
+  const startIndex = (page - 1) * 16
+  const endIndex = page * 16
+  const productsToDisplay = products.slice(startIndex, endIndex)
+  return productsToDisplay
+}
 
 export const CartContext = createContext({
   isCartOpen: false,
@@ -66,12 +79,13 @@ export const CartContext = createContext({
   setSearchfield: () => {},
   highToLow: () => {},
   tagFilter: () => {},
-  setTagField: () => {},
+  tagfield: '',
+  setTagfield: () => {},
   productsTags: [],
   companies: [],
   newToOld: () => {},
   oldToNew: () => {},
-  selectMugOrShirt: () => {},
+  filterWithItemTypes: () => {},
   setProductsTags: () => {},
 })
 
@@ -84,7 +98,7 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
   const [searchfield, setSearchfield] = useState('')
-  const [tagField, setTagField] = useState('')
+  const [tagfield, setTagfield] = useState('')
   const [cartTotal, setCartTotal] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
@@ -122,32 +136,23 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from companies data fetch with app-context')
       })
   }, [])
-  const currentPageProducts = (arr, page) => {
-    const startIndex = (page - 1) * 16
-    const endIndex = page * 16
-    const productsToDisplay = arr.slice(startIndex, endIndex)
-    return productsToDisplay
-  }
+
   useEffect(() => {
+    setProductsTags(getProductTags(allProducts))
     setPaginationItems(currentPageProducts(products, currentPage))
     setPageCount(Math.ceil(products.length / 16))
   }, [products, currentPage])
 
-  useEffect(() => {
-    const productTags = allProducts.map((product) => product.tags)
-    const tags = productTags.flat()
-    const uniqueTags = [...new Set(tags)]
-    setProductsTags(uniqueTags)
-  }, [products])
+  console.log('productsTags')
 
   const tagFilter = (tag) => {
-    setTagField(tag)
+    setTagfield(tag)
   }
   const slugs = companies.map((company) => company.slug.toLowerCase())
 
   const inputFilterCompaniesSlug = () => {
     const filterWithSlug = slugs.filter((slug) =>
-      slug.includes(tagField.toLowerCase())
+      slug.includes(tagfield.toLowerCase())
     )
 
     const tagsFilterProducts = allProducts.filter((product) =>
@@ -185,22 +190,15 @@ export const CartProvider = ({ children }) => {
     const filteredProducts = allProducts.filter((product) =>
       product.name.toLowerCase().includes(searchfield.toLowerCase())
     )
-    setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+    setProducts(filteredProducts)
     setPageCount(Math.ceil(filteredProducts.length / 16))
   }
 
-  const selectMugOrShirt = (label) => {
-    const selectMugs = products.filter((product) => product.itemType === 'mug')
-    const selectShirts = products.filter(
-      (product) => product.itemType === 'shirt'
+  const filterWithItemTypes = (label) => {
+    const filteredProducts = allProducts.filter(
+      (product) => product.itemType === label
     )
-    if (label === 'mug') {
-      setProducts(selectMugs)
-      setPageCount(Math.ceil(selectMugs.length / 16))
-    } else if (label === 'shirt') {
-      setProducts(selectShirts)
-      setPageCount(Math.ceil(selectShirts.length / 16))
-    }
+    setProducts(filteredProducts)
   }
 
   const lowToHigh = (products) => {
@@ -258,13 +256,14 @@ export const CartProvider = ({ children }) => {
     setSearchfield,
     highToLow,
     tagFilter,
-    setTagField,
+    tagfield,
+    setTagfield,
     productsTags,
     setCartCount,
     companies,
     newToOld,
     oldToNew,
-    selectMugOrShirt,
+    filterWithItemTypes,
     setProductsTags,
   }
 
