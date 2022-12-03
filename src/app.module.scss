@@ -5,6 +5,7 @@ $checkbox-selected: #1ea4ce;
 .appContainer {
   position: relative;
   width: 100%;
+  overflow: hidden;
   .appWrapper {
     display: flex;
     max-width: 80%;

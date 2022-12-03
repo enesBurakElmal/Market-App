@@ -14,20 +14,22 @@ const EmployeesIndex = () => {
     pageCount,
     setCurrentPage,
     selectMugOrShirt,
+    products,
   } = useContext(CartContext)
 
   const handlePageClick = (onPage) => {
-    setCurrentPage(onPage.selected + 1)
+    const newOffset = (onPage.selected % products.length) + 1
+    setCurrentPage(newOffset)
   }
 
-  const FilterButton = ({ onFilter, label, active }) => {
+  const FilterButton = ({ label, onFilter }) => {
     return (
       <Fragment>
         <button
           className={`${styles.button} ${
             buttonLabel === label ? styles.active : ''
           } ${{ transition: 'ease-in-out 0.3s' }}`}
-          onClick={active}
+          onClick={onFilter}
         >
           {label}
         </button>
@@ -42,11 +44,11 @@ const EmployeesIndex = () => {
           <div className={styles.button__content}>
             <FilterButton
               label={'mug'}
-              active={() => setButtonLabel('mug') || selectMugOrShirt('mug')}
+              onFilter={() => setButtonLabel('mug') || selectMugOrShirt('mug')}
             />
             <FilterButton
               label={'shirt'}
-              active={() =>
+              onFilter={() =>
                 setButtonLabel('shirt') || selectMugOrShirt('shirt')
               }
             />
@@ -97,6 +99,7 @@ const EmployeesIndex = () => {
           nextLinkClassName={styles.nextButton}
           disabledClassName={styles.navigationDisabled}
           activeLinkClassName={styles.navigationActive}
+          // renderOnZeroPageCount={null}
         />
       </div>
     </Fragment>

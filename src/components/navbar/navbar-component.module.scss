@@ -18,10 +18,14 @@
       align-items: center;
       justify-content: center;
       margin-left: auto;
+      margin-right: auto;
       .navbarLogo {
         height: 40.32px;
         margin-left: auto;
       }
+    }
+    .navbarPayloadActive {
+      animation: wiggle 10s linear infinite;
     }
     .navbarPayload {
       max-width: 129px;
@@ -31,9 +35,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: auto;
       background-color: #147594;
       gap: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: #0f5a6e;
+      }
       .payloadText {
         width: 100%;
         height: 100%;
@@ -43,5 +52,31 @@
         font-size: 14px;
       }
     }
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-2.5deg);
+  }
+  20% {
+    transform: rotateZ(1.5deg);
+  }
+  25% {
+    transform: rotateZ(-1.5deg);
+  }
+  30% {
+    transform: rotateZ(1deg);
+  }
+  35% {
+    transform: rotateZ(-0.7deg);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0);
   }
 }

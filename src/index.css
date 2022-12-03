@@ -4,7 +4,6 @@
 
 body {
   margin: 0 auto;
-  text-overflow: ellipsis;
   font-family: 'Open Sans', sans-serif;
-  overflow-y: auto;
+  overflow-x: hidden;
 }

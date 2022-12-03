@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/.netlify
+/.expo
 # README.md
 # testing
 /coverage

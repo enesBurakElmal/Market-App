@@ -42,12 +42,6 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.added !== cartItemToClear.added)
 
-const currentPageProducts = (products, page) => {
-  const startIndex = (page - 1) * 16
-  const endIndex = page * 16
-  const productsToDisplay = products.slice(startIndex, endIndex)
-  return productsToDisplay
-}
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
@@ -128,7 +122,12 @@ export const CartProvider = ({ children }) => {
         console.log(error, 'err from companies data fetch with app-context')
       })
   }, [])
-
+  const currentPageProducts = (arr, page) => {
+    const startIndex = (page - 1) * 16
+    const endIndex = page * 16
+    const productsToDisplay = arr.slice(startIndex, endIndex)
+    return productsToDisplay
+  }
   useEffect(() => {
     setPaginationItems(currentPageProducts(products, currentPage))
     setPageCount(Math.ceil(products.length / 16))
@@ -140,16 +139,17 @@ export const CartProvider = ({ children }) => {
     const uniqueTags = [...new Set(tags)]
     setProductsTags(uniqueTags)
   }, [products])
+
   const tagFilter = (tag) => {
     setTagField(tag)
   }
-
   const slugs = companies.map((company) => company.slug.toLowerCase())
 
   const inputFilterCompaniesSlug = () => {
     const filterWithSlug = slugs.filter((slug) =>
       slug.includes(tagField.toLowerCase())
     )
+
     const tagsFilterProducts = allProducts.filter((product) =>
       filterWithSlug.includes(product.slug.toLowerCase())
     )
@@ -168,18 +168,18 @@ export const CartProvider = ({ children }) => {
   // return filteredProductsSlug
   // inputFilterCompaniesSlug()
 
-  useEffect(() => {
-    if (tagField === '') {
-      setProducts(allProducts)
-      // setPageCount(Math.ceil(allProducts.length / 16))
-    } else {
-      const filteredProducts = inputFilterCompaniesSlug()
-      // console.log(filteredProducts)
-      // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
-      // setPageCount(Math.ceil(filteredProducts.length / 16))
-      // setProducts(filterOnTags())
-    }
-  }, [tagField])
+  // useEffect(() => {
+  //   if (tagField === '') {
+  //     // setProducts(allProducts)
+  //     // setPageCount(Math.ceil(allProducts.length / 16))
+  //   } else {
+  //     const filteredProducts = inputFilterCompaniesSlug()
+  //     // console.log(filteredProducts)
+  //     // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+  //     // setPageCount(Math.ceil(filteredProducts.length / 16))
+  //     // setProducts(filterOnTags())
+  //   }
+  // }, [tagField])
 
   const brandsFilter = (searchfield) => {
     const filteredProducts = allProducts.filter((product) =>
@@ -195,9 +195,11 @@ export const CartProvider = ({ children }) => {
       (product) => product.itemType === 'shirt'
     )
     if (label === 'mug') {
-      setPaginationItems(currentPageProducts(selectMugs, currentPage))
-    } else {
-      setPaginationItems(currentPageProducts(selectShirts, currentPage))
+      setProducts(selectMugs)
+      setPageCount(Math.ceil(selectMugs.length / 16))
+    } else if (label === 'shirt') {
+      setProducts(selectShirts)
+      setPageCount(Math.ceil(selectShirts.length / 16))
     }
   }
 

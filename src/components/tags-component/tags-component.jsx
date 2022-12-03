@@ -33,7 +33,7 @@ const TagsComponent = () => {
       )
       setProducts(afterTagFilter)
     }
-  }, [handleTag, products, setProducts])
+  }, [handleTag])
 
   const handleSelectAll = () => {
     setProducts(allProducts)

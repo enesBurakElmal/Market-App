@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Logo from './../../assets/Logo.svg'
 import CheckoutAsset from './../../assets/checkout.svg'
@@ -7,7 +7,7 @@ import { CartContext } from '../../contexts/cart-item.context'
 
 import styles from './navbar-component.module.scss'
 
-const Navbar = () => {
+const Navbar = ({ checkoutController }) => {
   const { cartTotal } = useContext(CartContext)
 
   return (
@@ -17,7 +17,12 @@ const Navbar = () => {
         <div className={styles.logoDiv}>
           <img src={Logo} alt="logo" className={styles.navbarLogo} />
         </div>
-        <div className={styles.navbarPayload}>
+        <div
+          className={`${styles.navbarPayload} ${
+            cartTotal > 0 && styles.navbarPayloadActive
+          }`}
+          onClick={checkoutController}
+        >
           <img src={CheckoutAsset} alt="checkout" />
           <div>
             <p className={styles.payloadText} value={cartTotal}>

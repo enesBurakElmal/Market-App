@@ -37,8 +37,8 @@ const FilterComponent = ({
     return uniqueBrands.length
   }
 
-  const sliceTag = (array, start, end) => {
-    const slicedArray = array.slice(start, end)
+  const sliceTag = (value, start, end) => {
+    const slicedArray = value.slice(start, end)
     return slicedArray
   }
 
@@ -70,11 +70,9 @@ const FilterComponent = ({
               >
                 All{' '}
                 <span className={styles.nameCount}>
-                  (
-                  {header === 'Brands'
-                    ? brandsTotalCount(productsData)
-                    : productsTotalTagCount(productsData).length}
-                  )
+                  {header === 'Brands' && brandsTotalCount(productsData)}
+                  {header === 'Tags' &&
+                    productsTotalTagCount(productsData).length}
                 </span>
               </label>
             </div>
@@ -99,11 +97,8 @@ const FilterComponent = ({
                         : tag}
                     </label>{' '}
                     <span className={styles.nameCount}>
-                      (
-                      {tag.slug
-                        ? sameNameCountBrands(productsData, tag.slug)
-                        : sameNameCountTags(tag)}
-                      )
+                      {tag.slug && sameNameCountBrands(productsData, tag.slug)}
+                      {tag && sameNameCountTags(tag)}
                     </span>
                   </div>
                 </Fragment>

@@ -16,7 +16,7 @@ class App extends Component {
     super(props)
     this.state = {
       width: window.innerWidth,
-      checkoutPopup: false,
+      checkoutPopup: true,
     }
   }
 
@@ -25,13 +25,11 @@ class App extends Component {
   }
 
   render() {
-    // const width = this.state.width
-
-    // const popupController = this.popupController
-
+    const popupController = this.popupController
+    const { checkoutPopup } = this.state
     return (
       <Fragment>
-        <Navbar />
+        <Navbar checkoutController={popupController} />
         <div className={styles.appContainer}>
           <div style={{ height: window.innerHeight / 10 }} />
           <div className={styles.appWrapper}>
@@ -43,11 +41,13 @@ class App extends Component {
             <div className={styles.middleColumn}>
               <EmployeesIndex />
             </div>
-            <div
-              className={`${styles.shortColumn} ${styles.absolute}`}
-              onClick={this.popupController}
-            >
-              <PayloadComponent cartItem={this.props.cartItem} />
+            <div className={`${styles.shortColumn} ${styles.checkout}`}>
+              {checkoutPopup && (
+                <PayloadComponent
+                  popupController={popupController}
+                  cartItem={this.props.cartItem}
+                />
+              )}
             </div>
           </div>
         </div>
