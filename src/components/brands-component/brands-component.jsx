@@ -7,8 +7,16 @@ import FilterComponent from '../filter-component/filter.component'
 const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
-  const { brandsFilter, products, setProducts, companies } =
-    useContext(CartContext)
+  const {
+    brandsFilter,
+    products,
+    setProducts,
+    companies,
+    setPaginationItems,
+    setPageCount,
+    currentPageProducts,
+    currentPage,
+  } = useContext(CartContext)
 
   const handleSearch = (e) => brandsFilter(e.target.value)
   const selectedCompanyFilter = (e) => {
@@ -23,9 +31,11 @@ const BrandsComponent = () => {
       const afterSlugFilter = allProducts.filter((product) =>
         selectedSlugs.includes(product.manufacturer)
       )
-      setProducts(afterSlugFilter)
+      setPaginationItems(currentPageProducts(afterSlugFilter, currentPage))
+      setPageCount(Math.ceil(afterSlugFilter.length / 16))
     } else {
       setProducts(allProducts)
+      setPageCount(Math.ceil(allProducts.length / 16))
     }
   }, [selectedSlugs, products, setProducts])
 

@@ -2,18 +2,9 @@ import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import companiesJson from '../companies'
 import itemsJson from '../items'
-
 export let allProducts = []
 const productsUrl = 'http://localhost:3001/items'
-const companiesUrl = 'http://market-workspace.netlify.app/companies.json'
-let config = {
-  headers: {
-    'Cache-Control': 'no-cache',
-    'Accept-Language': 'en',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  },
-}
+const companiesUrl = 'http://localhost:3002/companies'
 
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -30,6 +21,7 @@ const addCartItem = (cartItems, productToAdd) => {
 
   return [...cartItems, { ...productToAdd, quantity: 1 }]
 }
+
 const removeCartItem = (cartItems, cartItemToRemove) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.added === cartItemToRemove.added
@@ -114,25 +106,36 @@ export const CartProvider = ({ children }) => {
     setCartTotal(newCartTotal)
   }, [cartItems])
 
-  useEffect(() => {
-    axios
-      .get(productsUrl)
-      .then((response) => {
-        setProducts(response.data)
-        allProducts = response.data
-        // setPageCount(Math.ceil(response.data.length / 16))
-      })
-      .catch((error) => {
-        console.log(error, 'err from products data fetch with app-context')
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get(productsUrl)
+  //     .then((response) => {
+  //       setProducts(response.data)
+  //       allProducts = response.data
+  //       // setPageCount(Math.ceil(response.data.length / 16))
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'err from products data fetch with app-context')
+  //     })
+  // }, [])
+
+  // useEffect(() => {
+  //   axios
+  //     .get(companiesUrl)
+  //     .then((response) => {
+  //       setCompanies(response.data)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'err from companies data fetch with app-context')
+  //     })
+  // }, [])
 
   useEffect(() => {
     setProducts(itemsJson)
     setCompanies(companiesJson)
     allProducts = itemsJson
-    setPageCount(Math.ceil(products.length / 16))
-  }, [products, companies])
+    // setPageCount(Math.ceil(products.length / 16))
+  }, [])
 
   useEffect(() => {
     setPaginationItems(currentPageProducts(products, currentPage))
@@ -159,19 +162,8 @@ export const CartProvider = ({ children }) => {
       filterWithSlug.includes(product.slug.toLowerCase())
     )
 
-    // const filterWithSlugCompaniesId = filterWithSlugCompanies.map(
-    //   (company) => company.added
-    // )
-    // const filterWithSlugProducts = allProducts.filter((product) =>
-    //   filterWithSlugCompaniesId.includes(product.companyId)
-    // )
     console.log(filterWithSlug, 'kekw')
   }
-
-  // console.log(companiesSlug, 'companiesSlug', filteredProductsSlug, '2')
-  // console.log(filteredProductsSlug)
-  // return filteredProductsSlug
-  // inputFilterCompaniesSlug()
 
   useEffect(() => {
     if (tagField === '') {
@@ -180,7 +172,7 @@ export const CartProvider = ({ children }) => {
     } else {
       const filteredProducts = inputFilterCompaniesSlug()
       // console.log(filteredProducts)
-      // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
+      setPaginationItems(currentPageProducts(filteredProducts, currentPage))
       // setPageCount(Math.ceil(filteredProducts.length / 16))
       // setProducts(filterOnTags())
     }
