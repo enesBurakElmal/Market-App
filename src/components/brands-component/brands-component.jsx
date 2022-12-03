@@ -33,7 +33,6 @@ const BrandsComponent = () => {
     setProducts(allProducts)
     setSelectedSlugs([])
   }
-
   return (
     <Fragment>
       <FilterComponent
