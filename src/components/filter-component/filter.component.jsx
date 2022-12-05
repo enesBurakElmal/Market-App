@@ -3,7 +3,6 @@ import React, { Fragment } from 'react'
 import SearchBox from '../search-box/search-box.component'
 
 import styles from './filter.module.scss'
-
 const FilterComponent = ({
   searchfield,
   inputData,
@@ -12,27 +11,25 @@ const FilterComponent = ({
   productsData,
   selectAll,
 }) => {
-  const sameNameCountTags = (name) => {
-    const count = productsData.filter((item) => item.tags.includes(name))
+  const sameNameCountTags = (tag) => {
+    const count = productsData.filter((item) => item.tags.includes(tag))
     return count.length
   }
 
-  const sameNameCountBrands = (productsArray, name) => {
-    const count = productsArray.filter((item) =>
-      item.manufacturer.includes(name)
-    )
+  const sameNameCountBrands = (tag) => {
+    const count = productsData.filter((item) => item.manufacturer === tag)
     return count.length
   }
 
-  const productsTotalTagCount = (productsArray) => {
-    const tagCount = productsArray.map((item) => item.tags)
+  const productsTotalTagCount = () => {
+    const tagCount = productsData.map((item) => item.tags)
     const tagCountFlat = tagCount.flat()
     const uniqueTags = [...new Set(tagCountFlat)]
     return uniqueTags
   }
 
-  const brandsTotalCount = (productsArray) => {
-    const brands = productsArray.map((item) => item.manufacturer)
+  const brandsTotalCount = () => {
+    const brands = productsData.map((item) => item.manufacturer)
     const uniqueBrands = [...new Set(brands)]
     return uniqueBrands.length
   }
@@ -70,9 +67,10 @@ const FilterComponent = ({
               >
                 All{' '}
                 <span className={styles.nameCount}>
-                  ({header === 'Brands' && brandsTotalCount(productsData)}
-                  {header === 'Tags' &&
-                    productsTotalTagCount(productsData).length}
+                  (
+                  {header === 'Brands'
+                    ? brandsTotalCount()
+                    : productsTotalTagCount().length}
                   )
                 </span>
               </label>
@@ -86,6 +84,11 @@ const FilterComponent = ({
                       onClick={inputEvent}
                       name={tag.slug ? tag.slug : tag}
                       id={tag.slug ? tag.slug : tag}
+                      disabled={
+                        header === 'Brands'
+                          ? sameNameCountBrands(tag.slug) === 0
+                          : sameNameCountTags(tag) === 0
+                      }
                     />
                     <label
                       className={styles.searchTag}
@@ -98,8 +101,11 @@ const FilterComponent = ({
                         : tag}
                     </label>{' '}
                     <span className={styles.nameCount}>
-                      ({tag.slug && sameNameCountBrands(productsData, tag.slug)}
-                      {tag && sameNameCountTags(tag)})
+                      (
+                      {tag.slug
+                        ? sameNameCountBrands(tag.slug)
+                        : sameNameCountTags(tag)}
+                      )
                     </span>
                   </div>
                 </Fragment>

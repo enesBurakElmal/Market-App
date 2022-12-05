@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Logo from './../../assets/Logo.svg'
 import CheckoutAsset from './../../assets/checkout.svg'
@@ -19,7 +19,7 @@ const Navbar = ({ checkoutController }) => {
         </div>
         <div
           className={`${styles.navbarPayload} ${
-            cartTotal > 0 && styles.navbarPayloadActive
+            cartTotal > 0 ? styles.navbarPayloadActive : ''
           }`}
           onClick={checkoutController}
         >

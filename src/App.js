@@ -42,12 +42,12 @@ class App extends Component {
               <EmployeesIndex />
             </div>
             <div className={`${styles.shortColumn} ${styles.checkout}`}>
-              {checkoutPopup && (
+              {checkoutPopup ? (
                 <PayloadComponent
                   popupController={popupController}
                   cartItem={this.props.cartItem}
                 />
-              )}
+              ) : null}
             </div>
           </div>
         </div>

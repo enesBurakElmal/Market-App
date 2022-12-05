@@ -8,7 +8,7 @@ const BrandsComponent = () => {
   const [selectedSlugs, setSelectedSlugs] = useState([])
 
   const {
-    brandsFilter,
+    brandsInputFilter,
     products,
     setProducts,
     companies,
@@ -18,7 +18,8 @@ const BrandsComponent = () => {
     currentPageProducts,
   } = useContext(CartContext)
 
-  const handleSearch = (e) => brandsFilter(e.target.value)
+  const handleSearch = (e) => brandsInputFilter(e.target.value)
+
   const selectedCompanyFilter = (e) => {
     setSelectedSlugs([...selectedSlugs, e.target.name])
     if (selectedSlugs.includes(e.target.name)) {
@@ -28,13 +29,14 @@ const BrandsComponent = () => {
 
   useEffect(() => {
     if (selectedSlugs.length > 0) {
-      const afterSlugFilter = allProducts.filter((product) =>
+      const afterSlugFilter = products.filter((product) =>
         selectedSlugs.includes(product.manufacturer)
       )
-      setPaginationItems(currentPageProducts(afterSlugFilter, currentPage))
+      // setPaginationItems(currentPageProducts(afterSlugFilter, currentPage))
+      setProducts(afterSlugFilter)
       setPageCount(Math.ceil(afterSlugFilter.length / 16))
     } else {
-      setPaginationItems(currentPageProducts(allProducts, currentPage))
+      setProducts(allProducts)
       setPageCount(Math.ceil(allProducts.length / 16))
     }
   }, [selectedSlugs, currentPage])

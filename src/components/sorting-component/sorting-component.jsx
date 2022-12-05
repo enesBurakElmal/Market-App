@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, memo } from 'react'
 
 import { CartContext } from '../../contexts/cart-item.context'
 import RadioInput from '../radio-button/radio-button.component'
@@ -54,4 +54,4 @@ const SortingComponent = () => {
   )
 }
 
-export default SortingComponent
+export default memo(SortingComponent)

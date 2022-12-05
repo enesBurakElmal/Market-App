@@ -62,7 +62,8 @@ export const CartContext = createContext({
   addItemToCart: () => {},
   removeItemFromCart: () => {},
   clearItemFromCart: () => {},
-  brandsFilter: () => {},
+  brandsInputFilter: () => {},
+  tagsInputFilter: () => {},
   cartCount: 0,
   cartTotal: 0,
   products: [],
@@ -148,47 +149,19 @@ export const CartProvider = ({ children }) => {
   const tagFilter = (tag) => {
     setTagfield(tag)
   }
-  const slugs = companies.map((company) => company.slug.toLowerCase())
 
-  const inputFilterCompaniesSlug = () => {
-    const filterWithSlug = slugs.filter((slug) =>
-      slug.includes(tagfield.toLowerCase())
+  const brandsInputFilter = (searchfield) => {
+    const filteredProducts = allProducts.filter((product) =>
+      product.manufacturer.toLowerCase().includes(searchfield.toLowerCase())
     )
-
-    const tagsFilterProducts = allProducts.filter((product) =>
-      filterWithSlug.includes(product.slug.toLowerCase())
-    )
-
-    // const filterWithSlugCompaniesId = filterWithSlugCompanies.map(
-    //   (company) => company.added
-    // )
-    // const filterWithSlugProducts = allProducts.filter((product) =>
-    //   filterWithSlugCompaniesId.includes(product.companyId)
-    // )
-    console.log(filterWithSlug, 'kekw')
+    setProducts(filteredProducts)
+    setPageCount(Math.ceil(filteredProducts.length / 16))
   }
 
-  // console.log(companiesSlug, 'companiesSlug', filteredProductsSlug, '2')
-  // console.log(filteredProductsSlug)
-  // return filteredProductsSlug
-  // inputFilterCompaniesSlug()
-
-  // useEffect(() => {
-  //   if (tagField === '') {
-  //     // setProducts(allProducts)
-  //     // setPageCount(Math.ceil(allProducts.length / 16))
-  //   } else {
-  //     const filteredProducts = inputFilterCompaniesSlug()
-  //     // console.log(filteredProducts)
-  //     // setPaginationItems(currentPageProducts(filteredProducts, currentPage))
-  //     // setPageCount(Math.ceil(filteredProducts.length / 16))
-  //     // setProducts(filterOnTags())
-  //   }
-  // }, [tagField])
-
-  const brandsFilter = (searchfield) => {
+  const tagsInputFilter = (tagfield) => {
+    setTagfield(tagfield)
     const filteredProducts = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(searchfield.toLowerCase())
+      product.tags.map((tag) => tag.toLowerCase()).includes(tagfield)
     )
     setProducts(filteredProducts)
     setPageCount(Math.ceil(filteredProducts.length / 16))
@@ -237,7 +210,7 @@ export const CartProvider = ({ children }) => {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
-    brandsFilter,
+    brandsInputFilter,
     removeItemToCart,
     clearItemFromCart,
     cartItems,
@@ -253,6 +226,7 @@ export const CartProvider = ({ children }) => {
     setCurrentPage,
     setPageCount,
     currentPageProducts,
+    searchfield,
     setSearchfield,
     highToLow,
     tagFilter,
@@ -265,6 +239,7 @@ export const CartProvider = ({ children }) => {
     oldToNew,
     filterWithItemTypes,
     setProductsTags,
+    tagsInputFilter,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

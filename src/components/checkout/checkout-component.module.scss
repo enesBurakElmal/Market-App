@@ -4,14 +4,19 @@
   background-color: #ffffff;
   width: 90%;
   margin-left: auto;
+
   .payloadContent {
     display: flex;
     flex-direction: column;
-    border: 8px solid #1ea4ce;
     height: 320px;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 10px;
+    border: 8px solid #1ea4ce;
+    @media screen and (max-width: 768px) {
+      // height: 200px;
+      // padding: 5px;
+    }
     .buyContent {
       text-align: end;
       // overflow: hidden;

@@ -16,7 +16,7 @@ const PayloadComponent = (payload) => {
         <div className={styles.payloadContent}>
           {cartItems.length ? (
             cartItems.map((item, index) => (
-              <CartItem key={index} cartItem={item}></CartItem>
+              <CartItem key={index} cartItem={item} />
             ))
           ) : (
             <p>Your cart is empty</p>
@@ -30,7 +30,7 @@ const PayloadComponent = (payload) => {
                 cursor: cartTotal === `0.00` ? 'not-allowed' : 'pointer',
               }}
             >
-              {cartTotal}
+              ₺ {cartTotal}
             </button>
           </div>
         </div>
