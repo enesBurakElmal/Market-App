@@ -53,8 +53,8 @@ const FilterComponent = ({
             searchChange={searchfield}
           />
           <div style={{ height: window.innerHeight / 30 }} />
-          <div className={styles.tags}>
-            <div className={styles.tagsWrapper}>
+          <ul className={styles.tags}>
+            <li className={styles.tagsWrapper}>
               <input
                 type="checkbox"
                 className={styles.inputTag}
@@ -74,11 +74,18 @@ const FilterComponent = ({
                   )
                 </span>
               </label>
-            </div>
+            </li>
+            {/* <label for="products" className={styles.inputTag}>
+              {header === 'Brands' ? 'Brands' : 'Tags'}
+            </label> */}
+            {/* <select
+              name="products"
+              id={header === 'Brands' ? 'allBrands' : 'allTags'}
+            > */}
             {inputData.map((tag, index) => {
               return (
                 <Fragment>
-                  <div className={styles.tagsWrapper} key={index}>
+                  <li className={styles.tagsWrapper} key={index}>
                     <input
                       type="checkbox"
                       onClick={inputEvent}
@@ -107,11 +114,18 @@ const FilterComponent = ({
                         : sameNameCountTags(tag)}
                       )
                     </span>
-                  </div>
+                  </li>
+
+                  {/* <li className={styles.tagsWrapper} key={index}>
+                      <option value="enn" id={tag.slug ? tag.slug : tag}>
+                        {tag.slug ? tag.slug : tag}
+                      </option>
+                    </li> */}
                 </Fragment>
               )
             })}
-          </div>
+            {/* </select> */}
+          </ul>
         </div>
       </div>
     </Fragment>

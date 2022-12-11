@@ -61,11 +61,11 @@ const EmployeesIndex = () => {
             />
           </div>
         </div>
-        <div className={styles.products}>
+        <ul className={styles.products}>
           {paginationItems.map((cartItem, index) => {
             const addProductToCart = () => addItemToCart(cartItem)
             return (
-              <div className={styles.productCard} key={index}>
+              <li className={styles.productCard} key={index}>
                 <div className={styles.imgDiv}>
                   <a
                     href={'https://github.com/enesBurakElmal/'}
@@ -85,10 +85,10 @@ const EmployeesIndex = () => {
                 <button className={styles.buyButton} onClick={addProductToCart}>
                   Add
                 </button>
-              </div>
+              </li>
             )
           })}
-        </div>
+        </ul>
       </div>
       <div style={{}} className={styles.paginate__wrapper}>
         <ReactPaginate
